@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approval System — AI/ML Project Dashboard</title>
+    <meta name="description" content="Interactive dashboard for Loan Approval System ML project with dataset analysis, limitations, and prediction insights.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <div class="logo-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="url(#logoGrad)" stroke-width="2.5"/>
+                    <path d="M9 14L12.5 17.5L19 11" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="2" y1="2" x2="26" y2="26">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#a78bfa"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <span class="brand-text">LoanSense<span class="brand-dot">.</span>AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="#overview" class="nav-link active" data-section="overview">Overview</a>
+            <a href="#dataset" class="nav-link" data-section="dataset">Dataset</a>
+            <a href="#limitations" class="nav-link" data-section="limitations">Limitations</a>
+            <a href="#insights" class="nav-link" data-section="insights">Insights</a>
+            <a href="#models" class="nav-link" data-section="models">Models</a>
+            <a href="#predict" class="nav-link" data-section="predict">Predict</a>
+        </div>
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            <span class="status-text">Model Active</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="overview">
+        <div class="hero-content">
+            <div class="hero-badge">AI/ML Classification Project</div>
+            <h1 class="hero-title">
+                Loan Approval
+                <span class="gradient-text">Prediction System</span>
+            </h1>
+            <p class="hero-subtitle">
+                A machine learning pipeline analyzing 1,000 loan applications across 20 features using 
+                Logistic Regression, Naive Bayes, and KNN classifiers to predict loan approval outcomes.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">1,000</div>
+                    <div class="hero-stat-label">Applications</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">20</div>
+                    <div class="hero-stat-label">Features</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">3</div>
+                    <div class="hero-stat-label">ML Models</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">5%</div>
+                    <div class="hero-stat-label">Missing Data</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset Overview Section -->
+    <section class="section" id="dataset">
+        <div class="section-header">
+            <div class="section-icon">📊</div>
+            <h2 class="section-title">Dataset Overview</h2>
+            <p class="section-desc">Comprehensive analysis of the loan approval dataset — structure, distributions, and quality metrics.</p>
+        </div>
+
+        <!-- Quick Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card" id="stat-total">
+                <div class="stat-card-icon blue">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value" data-count="1000">0</div>
+                    <div class="stat-card-label">Total Records</div>
+                </div>
+                <div class="stat-card-trend up">+100%</div>
+            </div>
+            <div class="stat-card" id="stat-approved">
+                <div class="stat-card-icon green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value" data-count="298">0</div>
+                    <div class="stat-card-label">Approved (31.4%)</div>
+                </div>
+                <div class="stat-card-trend down">Minority</div>
+            </div>
+            <div class="stat-card" id="stat-rejected">
+                <div class="stat-card-icon red">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                </div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value" data-count="652">0</div>
+                    <div class="stat-card-label">Rejected (68.6%)</div>
+                </div>
+                <div class="stat-card-trend up">Majority</div>
+            </div>
+            <div class="stat-card" id="stat-missing">
+                <div class="stat-card-icon amber">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value">5%</div>
+                    <div class="stat-card-label">Missing per Column</div>
+                </div>
+                <div class="stat-card-trend neutral">50 rows each</div>
+            </div>
+        </div>
+
+        <!-- Feature Table -->
+        <div class="card feature-table-card">
+            <div class="card-header">
+                <h3 class="card-title">Feature Schema</h3>
+                <div class="card-badge">20 Columns</div>
+            </div>
+            <div class="table-wrapper">
+                <table class="feature-table" id="featureTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Feature</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Missing</th>
+                            <th>Sample Values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td><code>Applicant_ID</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Identifier</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>1–1000</td></tr>
+                        <tr><td>2</td><td><code>Applicant_Income</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹2,009 — ₹19,988</td></tr>
+                        <tr><td>3</td><td><code>Coapplicant_Income</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹0 — ₹9,981</td></tr>
+                        <tr><td>4</td><td><code>Employment_Status</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Salaried, Self-employed, Contract, Unemployed</td></tr>
+                        <tr><td>5</td><td><code>Age</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>21 — 59 yrs</td></tr>
+                        <tr><td>6</td><td><code>Marital_Status</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Married, Single</td></tr>
+                        <tr><td>7</td><td><code>Dependents</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>0 — 5</td></tr>
+                        <tr><td>8</td><td><code>Credit_Score</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>550 — 799</td></tr>
+                        <tr><td>9</td><td><code>Existing_Loans</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>0 — 5</td></tr>
+                        <tr><td>10</td><td><code>DTI_Ratio</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>0.01 — 0.99</td></tr>
+                        <tr><td>11</td><td><code>Savings</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹102 — ₹49,960</td></tr>
+                        <tr><td>12</td><td><code>Collateral_Value</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹33 — ₹49,978</td></tr>
+                        <tr><td>13</td><td><code>Loan_Amount</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Loan</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹1,015 — ₹39,995</td></tr>
+                        <tr><td>14</td><td><code>Loan_Term</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Loan</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>12 — 84 months</td></tr>
+                        <tr><td>15</td><td><code>Loan_Purpose</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Loan</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Personal, Car, Home, Education, Business</td></tr>
+                        <tr><td>16</td><td><code>Property_Area</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Location</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Urban, Semiurban, Rural</td></tr>
+                        <tr><td>17</td><td><code>Education_Level</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Graduate, Not Graduate</td></tr>
+                        <tr><td>18</td><td><code>Gender</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Male (571), Female (379)</td></tr>
+                        <tr><td>19</td><td><code>Employer_Category</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Private, Government, MNC, Business, Unemployed</td></tr>
+                        <tr class="target-row"><td>20</td><td><code>Loan_Approved</code></td><td><span class="type-badge target">Target</span></td><td>Output</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Yes (298) / No (652)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Distribution Charts -->
+        <div class="charts-grid">
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h3 class="card-title">Target Distribution</h3>
+                    <div class="card-badge warning">Imbalanced</div>
+                </div>
+                <div class="donut-chart-container">
+                    <div class="donut-chart" id="targetDonut">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="#1e1b4b" stroke-width="24"/>
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#rejectGrad)" stroke-width="24"
+                                stroke-dasharray="345.6 502.65" stroke-dashoffset="-125.66" stroke-linecap="round" class="donut-segment reject-seg"/>
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#approveGrad)" stroke-width="24"
+                                stroke-dasharray="157.08 502.65" stroke-dashoffset="-125.66" stroke-linecap="round" class="donut-segment approve-seg"/>
+                            <defs>
+                                <linearGradient id="approveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#34d399"/>
+                                    <stop offset="100%" stop-color="#6ee7b7"/>
+                                </linearGradient>
+                                <linearGradient id="rejectGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#f87171"/>
+                                    <stop offset="100%" stop-color="#fca5a5"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="donut-center">
+                            <div class="donut-ratio">1:2.2</div>
+                            <div class="donut-label">Imbalance Ratio</div>
+                        </div>
+                    </div>
+                    <div class="donut-legend">
+                        <div class="legend-item">
+                            <span class="legend-color green"></span>
+                            <span class="legend-text">Approved — 298 (31.4%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color red"></span>
+                            <span class="legend-text">Rejected — 652 (68.6%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h3 class="card-title">Credit Score Distribution</h3>
+                    <div class="card-badge success">Key Predictor</div>
+                </div>
+                <div class="bar-chart-container">
+                    <div class="bar-group">
+                        <div class="bar-label">Rejected Avg</div>
+                        <div class="bar-track">
+                            <div class="bar-fill red" style="width: 81.5%;" data-value="651.6">
+                                <span class="bar-value">651.6</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar-label">Approved Avg</div>
+                        <div class="bar-track">
+                            <div class="bar-fill green" style="width: 91%;" data-value="726.9">
+                                <span class="bar-value">726.9</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-separator"></div>
+                    <div class="bar-group">
+                        <div class="bar-label">Min Score</div>
+                        <div class="bar-track">
+                            <div class="bar-fill purple" style="width: 68.8%;" data-value="550">
+                                <span class="bar-value">550</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar-label">Max Score</div>
+                        <div class="bar-track">
+                            <div class="bar-fill purple" style="width: 100%;" data-value="799">
+                                <span class="bar-value">799</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bar-separator"></div>
+                    <div class="bar-group">
+                        <div class="bar-label">Threshold</div>
+                        <div class="bar-track">
+                            <div class="bar-fill amber" style="width: 81.4%;" data-value="~651">
+                                <span class="bar-value">~651</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="chart-note">Credit Score is the strongest separator between approved and rejected applications.</p>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h3 class="card-title">Approval by Employment</h3>
+                </div>
+                <div class="horizontal-bars">
+                    <div class="h-bar-group">
+                        <div class="h-bar-header">
+                            <span class="h-bar-label">Contract</span>
+                            <span class="h-bar-pct">39.7%</span>
+                        </div>
+                        <div class="h-bar-track">
+                            <div class="h-bar-fill" style="width: 39.7%; background: linear-gradient(90deg, #34d399, #6ee7b7);"></div>
+                        </div>
+                    </div>
+                    <div class="h-bar-group">
+                        <div class="h-bar-header">
+                            <span class="h-bar-label">Self-employed</span>
+                            <span class="h-bar-pct">31.2%</span>
+                        </div>
+                        <div class="h-bar-track">
+                            <div class="h-bar-fill" style="width: 31.2%; background: linear-gradient(90deg, #60a5fa, #93c5fd);"></div>
+                        </div>
+                    </div>
+                    <div class="h-bar-group">
+                        <div class="h-bar-header">
+                            <span class="h-bar-label">Salaried</span>
+                            <span class="h-bar-pct">29.2%</span>
+                        </div>
+                        <div class="h-bar-track">
+                            <div class="h-bar-fill" style="width: 29.2%; background: linear-gradient(90deg, #a78bfa, #c4b5fd);"></div>
+                        </div>
+                    </div>
+                    <div class="h-bar-group">
+                        <div class="h-bar-header">
+                            <span class="h-bar-label">Unemployed</span>
+                            <span class="h-bar-pct">24.4%</span>
+                        </div>
+                        <div class="h-bar-track">
+                            <div class="h-bar-fill" style="width: 24.4%; background: linear-gradient(90deg, #f87171, #fca5a5);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <div class="card-header">
+                    <h3 class="card-title">Income by Outcome</h3>
+                </div>
+                <div class="income-comparison">
+                    <div class="income-block rejected">
+                        <div class="income-icon">✗</div>
+                        <div class="income-label">Rejected</div>
+                        <div class="income-value">₹10,406</div>
+                        <div class="income-sub">avg income</div>
+                        <div class="income-range">₹2,009 — ₹19,988</div>
+                    </div>
+                    <div class="income-vs">VS</div>
+                    <div class="income-block approved">
+                        <div class="income-icon">✓</div>
+                        <div class="income-label">Approved</div>
+                        <div class="income-value">₹11,797</div>
+                        <div class="income-sub">avg income</div>
+                        <div class="income-range">₹2,020 — ₹19,955</div>
+                    </div>
+                </div>
+                <p class="chart-note">Only ~₹1,400 difference in mean income — income alone is a weak predictor.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Limitations Section -->
+    <section class="section limitations-section" id="limitations">
+        <div class="section-header">
+            <div class="section-icon">⚠️</div>
+            <h2 class="section-title">Dataset Limitations</h2>
+            <p class="section-desc">Critical issues that impact model reliability, fairness, and real-world deployment.</p>
+        </div>
+
+        <div class="limitations-grid">
+            <!-- Limitation 1: Class Imbalance -->
+            <div class="limitation-card severity-high">
+                <div class="limitation-severity">
+                    <span class="severity-dot high"></span>
+                    HIGH SEVERITY
+                </div>
+                <div class="limitation-icon">⚖️</div>
+                <h3 class="limitation-title">Class Imbalance</h3>
+                <p class="limitation-desc">
+                    The target variable is heavily skewed — <strong>68.6% rejected</strong> vs <strong>31.4% approved</strong> (ratio 1:2.2). 
+                    Models trained on this data will be biased toward predicting "No" (rejection), artificially inflating accuracy while 
+                    performing poorly on the minority class.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>High accuracy ≠ good model (accuracy paradox)</li>
+                        <li>Poor recall for approved loans</li>
+                        <li>Model may default to always predicting "Rejected"</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">SMOTE</span>
+                    <span class="mitigation-tag">Class Weights</span>
+                    <span class="mitigation-tag">F1-Score Metric</span>
+                    <span class="mitigation-tag">Stratified Split</span>
+                </div>
+            </div>
+
+            <!-- Limitation 2: Missing Values -->
+            <div class="limitation-card severity-high">
+                <div class="limitation-severity">
+                    <span class="severity-dot high"></span>
+                    HIGH SEVERITY
+                </div>
+                <div class="limitation-icon">🕳️</div>
+                <h3 class="limitation-title">Uniform Missing Data Pattern</h3>
+                <p class="limitation-desc">
+                    Exactly <strong>50 values (5%) are missing per every column</strong> — including the target variable. 
+                    This suspiciously uniform pattern suggests the data may be <strong>synthetically generated</strong> rather than 
+                    collected from real-world loan applications. Real data would have non-uniform missing patterns.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>50 rows have missing target labels — can't be used for training</li>
+                        <li>Uniform missingness hints at artificial dataset</li>
+                        <li>Imputation strategy choice significantly affects results</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">SimpleImputer (mean/mode)</span>
+                    <span class="mitigation-tag">Drop target-null rows</span>
+                    <span class="mitigation-tag">MICE Imputation</span>
+                </div>
+            </div>
+
+            <!-- Limitation 3: Small Sample -->
+            <div class="limitation-card severity-medium">
+                <div class="limitation-severity">
+                    <span class="severity-dot medium"></span>
+                    MEDIUM SEVERITY
+                </div>
+                <div class="limitation-icon">📉</div>
+                <h3 class="limitation-title">Small Sample Size</h3>
+                <p class="limitation-desc">
+                    Only <strong>1,000 records</strong> (950 usable after dropping target nulls) with 20 features 
+                    is a relatively small dataset for building reliable ML models. This limits the model's ability to 
+                    learn complex, non-linear patterns and increases the risk of overfitting.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>High variance in cross-validation scores</li>
+                        <li>Risk of overfitting, especially with KNN</li>
+                        <li>After train-test split, only ~760 training samples</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">Cross-Validation</span>
+                    <span class="mitigation-tag">Regularization</span>
+                    <span class="mitigation-tag">Feature Selection</span>
+                </div>
+            </div>
+
+            <!-- Limitation 4: Gender Bias -->
+            <div class="limitation-card severity-high">
+                <div class="limitation-severity">
+                    <span class="severity-dot high"></span>
+                    HIGH SEVERITY
+                </div>
+                <div class="limitation-icon">🚻</div>
+                <h3 class="limitation-title">Gender Imbalance & Potential Bias</h3>
+                <p class="limitation-desc">
+                    The dataset contains <strong>571 males (60%) vs 379 females (40%)</strong>. 
+                    Female applicants show a slightly higher approval rate (34.2%) than males (28.8%). 
+                    Using gender as a feature risks encoding <strong>discriminatory patterns</strong> into the model.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>Model may learn gender-based discriminatory patterns</li>
+                        <li>Legal & ethical concerns in financial lending (ECOA, GDPR)</li>
+                        <li>Gender as a protected attribute shouldn't drive loan decisions</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">Drop Gender Feature</span>
+                    <span class="mitigation-tag">Fairness Auditing</span>
+                    <span class="mitigation-tag">Adversarial Debiasing</span>
+                </div>
+            </div>
+
+            <!-- Limitation 5: Weak Predictors -->
+            <div class="limitation-card severity-medium">
+                <div class="limitation-severity">
+                    <span class="severity-dot medium"></span>
+                    MEDIUM SEVERITY
+                </div>
+                <div class="limitation-icon">🎯</div>
+                <h3 class="limitation-title">Weak Feature Separability</h3>
+                <p class="limitation-desc">
+                    Most categorical features show <strong>nearly identical approval rates</strong> across categories: 
+                    Property Area (~30% all areas), Education (32.8% vs 27.2%), Marital Status (similar). 
+                    Only <strong>Credit Score</strong> (651.6 vs 726.9) and <strong>Employment Status</strong> show meaningful separation.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>Many features add noise rather than signal</li>
+                        <li>Models may not significantly outperform baseline</li>
+                        <li>Overfitting on irrelevant features</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">Feature Importance Analysis</span>
+                    <span class="mitigation-tag">PCA / Dimensionality Reduction</span>
+                    <span class="mitigation-tag">Remove Low-Variance Features</span>
+                </div>
+            </div>
+
+            <!-- Limitation 6: Synthetic Data -->
+            <div class="limitation-card severity-medium">
+                <div class="limitation-severity">
+                    <span class="severity-dot medium"></span>
+                    MEDIUM SEVERITY
+                </div>
+                <div class="limitation-icon">🧪</div>
+                <h3 class="limitation-title">Likely Synthetic / Simulated Data</h3>
+                <p class="limitation-desc">
+                    Multiple signals indicate the data is artificially generated: perfectly uniform 5% missing rate across ALL columns, 
+                    near-perfect uniform distribution of Loan Purpose categories (178–202 each), 
+                    zero duplicate rows, and suspiciously rounded statistics.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>Patterns learned won't generalize to real applications</li>
+                        <li>Correlations between features may not reflect reality</li>
+                        <li>Suitable for learning ML workflows, not production deployment</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">Acknowledge Limitations</span>
+                    <span class="mitigation-tag">Use Real Datasets for Validation</span>
+                    <span class="mitigation-tag">Focus on Methodology</span>
+                </div>
+            </div>
+
+            <!-- Limitation 7: No Temporal Data -->
+            <div class="limitation-card severity-low">
+                <div class="limitation-severity">
+                    <span class="severity-dot low"></span>
+                    LOW SEVERITY
+                </div>
+                <div class="limitation-icon">📅</div>
+                <h3 class="limitation-title">No Temporal Information</h3>
+                <p class="limitation-desc">
+                    The dataset lacks timestamps or date features. In real-world lending, 
+                    <strong>economic conditions, interest rates, and lending policies change over time</strong>. 
+                    Without temporal context, the model cannot account for time-based trends.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>Cannot detect concept drift or seasonal patterns</li>
+                        <li>No ability to model changing economic conditions</li>
+                        <li>Static snapshot may not represent current trends</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">Document Assumption</span>
+                    <span class="mitigation-tag">Regular Retraining</span>
+                </div>
+            </div>
+
+            <!-- Limitation 8: Limited Categories -->
+            <div class="limitation-card severity-low">
+                <div class="limitation-severity">
+                    <span class="severity-dot low"></span>
+                    LOW SEVERITY
+                </div>
+                <div class="limitation-icon">📦</div>
+                <h3 class="limitation-title">Oversimplified Categories</h3>
+                <p class="limitation-desc">
+                    Education is binary (Graduate / Not Graduate), Gender is binary, Property Area has only 3 levels. 
+                    Real-world data would have more granular categories (PhD, Masters, High School, etc.) 
+                    which could provide better predictive power.
+                </p>
+                <div class="limitation-impact">
+                    <h4>Impact</h4>
+                    <ul>
+                        <li>Loss of potentially important granular information</li>
+                        <li>Binary features limit feature interaction patterns</li>
+                        <li>Non-binary gender identities are excluded</li>
+                    </ul>
+                </div>
+                <div class="limitation-mitigation">
+                    <h4>Mitigation</h4>
+                    <span class="mitigation-tag">Feature Engineering</span>
+                    <span class="mitigation-tag">Interaction Terms</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section class="section" id="insights">
+        <div class="section-header">
+            <div class="section-icon">💡</div>
+            <h2 class="section-title">Key Insights</h2>
+            <p class="section-desc">Data-driven findings that reveal patterns in loan approval decisions.</p>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card highlight">
+                <div class="insight-number">01</div>
+                <h3 class="insight-title">Credit Score is the Strongest Predictor</h3>
+                <p class="insight-desc">
+                    Approved applicants have an average credit score of <strong>726.9</strong> vs <strong>651.6</strong> for rejected ones — 
+                    a 75-point gap. The minimum credit score among approved applicants is 651, suggesting a clear threshold effect.
+                </p>
+                <div class="insight-metric">
+                    <span class="metric-label">Score Gap</span>
+                    <span class="metric-value">+75.3 pts</span>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-number">02</div>
+                <h3 class="insight-title">Income Matters Less Than Expected</h3>
+                <p class="insight-desc">
+                    The mean income difference between approved (₹11,797) and rejected (₹10,406) applicants is only ₹1,391 — 
+                    suggesting income alone is insufficient for prediction. The ranges overlap almost completely.
+                </p>
+                <div class="insight-metric">
+                    <span class="metric-label">Income Gap</span>
+                    <span class="metric-value">₹1,391</span>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-number">03</div>
+                <h3 class="insight-title">Contract Workers Get Most Approvals</h3>
+                <p class="insight-desc">
+                    Counter-intuitively, contract workers have the highest approval rate at <strong>39.7%</strong>, 
+                    while salaried employees are at 29.2%. This is unusual and may indicate data artifacts in the synthetic dataset.
+                </p>
+                <div class="insight-metric">
+                    <span class="metric-label">Contract Rate</span>
+                    <span class="metric-value">39.7%</span>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-number">04</div>
+                <h3 class="insight-title">Geographic Location Has Minimal Impact</h3>
+                <p class="insight-desc">
+                    Approval rates are nearly identical across areas: Urban (31.8%), Rural (30.2%), Semiurban (30.0%). 
+                    Property area provides almost no predictive signal for this dataset.
+                </p>
+                <div class="insight-metric">
+                    <span class="metric-label">Max Spread</span>
+                    <span class="metric-value">1.8%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Evaluation Section -->
+    <section class="section" id="models">
+        <div class="section-header">
+            <div class="section-icon">🧠</div>
+            <h2 class="section-title">Model Evaluation</h2>
+            <p class="section-desc">Compare performance of all 3 trained classifiers. Click a model to view detailed metrics.</p>
+        </div>
+
+        <!-- Model Selector Tabs -->
+        <div class="model-tabs" id="modelTabs">
+            <button class="model-tab" data-model="logistic_regression">
+                <div class="model-tab-icon">📈</div>
+                <div class="model-tab-info">
+                    <span class="model-tab-name">Logistic Regression</span>
+                    <span class="model-tab-badge">Linear</span>
+                </div>
+                <div class="model-tab-f1" id="tabF1LR">—</div>
+            </button>
+            <button class="model-tab active" data-model="naive_bayes">
+                <div class="model-tab-icon">📊</div>
+                <div class="model-tab-info">
+                    <span class="model-tab-name">Naive Bayes</span>
+                    <span class="model-tab-badge best">Best Model</span>
+                </div>
+                <div class="model-tab-f1" id="tabF1NB">—</div>
+            </button>
+            <button class="model-tab" data-model="knn">
+                <div class="model-tab-icon">📍</div>
+                <div class="model-tab-info">
+                    <span class="model-tab-name">K-Nearest Neighbors</span>
+                    <span class="model-tab-badge">K=5</span>
+                </div>
+                <div class="model-tab-f1" id="tabF1KNN">—</div>
+            </button>
+        </div>
+
+        <!-- Metrics Display -->
+        <div class="metrics-display" id="metricsDisplay">
+            <!-- Metric Cards -->
+            <div class="metrics-cards">
+                <div class="metric-card">
+                    <div class="metric-card-label">Accuracy</div>
+                    <div class="metric-card-value" id="metricAccuracy">—</div>
+                    <div class="metric-card-bar"><div class="metric-bar-fill accuracy-fill" id="barAccuracy"></div></div>
+                    <div class="metric-card-desc">Correct predictions / Total</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-label">Precision</div>
+                    <div class="metric-card-value" id="metricPrecision">—</div>
+                    <div class="metric-card-bar"><div class="metric-bar-fill precision-fill" id="barPrecision"></div></div>
+                    <div class="metric-card-desc">TP / (TP + FP)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-label">Recall</div>
+                    <div class="metric-card-value" id="metricRecall">—</div>
+                    <div class="metric-card-bar"><div class="metric-bar-fill recall-fill" id="barRecall"></div></div>
+                    <div class="metric-card-desc">TP / (TP + FN)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-label">F1-Score</div>
+                    <div class="metric-card-value" id="metricF1">—</div>
+                    <div class="metric-card-bar"><div class="metric-bar-fill f1-fill" id="barF1"></div></div>
+                    <div class="metric-card-desc">Harmonic mean of P & R</div>
+                </div>
+            </div>
+
+            <!-- Confusion Matrix -->
+            <div class="cm-and-comparison">
+                <div class="card cm-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Confusion Matrix</h3>
+                        <div class="card-badge" id="cmModelLabel">—</div>
+                    </div>
+                    <div class="cm-container">
+                        <div class="cm-labels-top">
+                            <div class="cm-spacer"></div>
+                            <div class="cm-col-label">Predicted No</div>
+                            <div class="cm-col-label">Predicted Yes</div>
+                        </div>
+                        <div class="cm-row">
+                            <div class="cm-row-label">Actual No</div>
+                            <div class="cm-cell tn" id="cmTN"><div class="cm-cell-value">—</div><div class="cm-cell-label">True Neg</div></div>
+                            <div class="cm-cell fp" id="cmFP"><div class="cm-cell-value">—</div><div class="cm-cell-label">False Pos</div></div>
+                        </div>
+                        <div class="cm-row">
+                            <div class="cm-row-label">Actual Yes</div>
+                            <div class="cm-cell fn" id="cmFN"><div class="cm-cell-value">—</div><div class="cm-cell-label">False Neg</div></div>
+                            <div class="cm-cell tp" id="cmTP"><div class="cm-cell-value">—</div><div class="cm-cell-label">True Pos</div></div>
+                        </div>
+                        <div class="cm-total">
+                            Test Set Size: <strong id="cmTotal">200</strong> samples
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="card comparison-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Model Comparison</h3>
+                        <div class="card-badge success">Side by Side</div>
+                    </div>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table" id="comparisonTable">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Logistic Regression</th>
+                                    <th>Naive Bayes</th>
+                                    <th>KNN (K=5)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Accuracy</td>
+                                    <td id="cmpLRAcc">—</td>
+                                    <td id="cmpNBAcc">—</td>
+                                    <td id="cmpKNNAcc">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Precision</td>
+                                    <td id="cmpLRPrec">—</td>
+                                    <td id="cmpNBPrec">—</td>
+                                    <td id="cmpKNNPrec">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Recall</td>
+                                    <td id="cmpLRRec">—</td>
+                                    <td id="cmpNBRec">—</td>
+                                    <td id="cmpKNNRec">—</td>
+                                </tr>
+                                <tr>
+                                    <td>F1-Score</td>
+                                    <td id="cmpLRF1">—</td>
+                                    <td id="cmpNBF1">—</td>
+                                    <td id="cmpKNNF1">—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="comparison-verdict" id="comparisonVerdict">
+                        Loading models...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Form -->
+    <section class="section" id="predict">
+        <div class="section-header">
+            <div class="section-icon">🔮</div>
+            <h2 class="section-title">Try a Prediction</h2>
+            <p class="section-desc">Enter applicant details and predict using actual trained ML models running in your browser.</p>
+        </div>
+
+        <div class="predict-container">
+            <form class="predict-form" id="predictForm">
+                <!-- Model Selector for Prediction -->
+                <div class="predict-model-selector">
+                    <label for="predictModelSelect">Select Model</label>
+                    <div class="model-select-group">
+                        <select id="predictModelSelect">
+                            <option value="logistic_regression">📈 Logistic Regression (F1: 0.791)</option>
+                            <option value="naive_bayes" selected>📊 Naive Bayes (Best — F1: 0.802)</option>
+                            <option value="knn">📍 KNN K=5 (F1: 0.551)</option>
+                        </select>
+                        <div class="model-indicator" id="modelIndicator">
+                            <span class="model-indicator-dot"></span>
+                            <span class="model-indicator-text">Naive Bayes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional missing form fields -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="creditScore">Credit Score</label>
+                        <input type="number" id="creditScore" min="300" max="900" value="700" required>
+                        <span class="form-hint">550 – 799 in dataset</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="income">Applicant Income (₹)</label>
+                        <input type="number" id="income" min="0" value="12000" required>
+                        <span class="form-hint">Avg: ₹10,853</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="coIncome">Co-applicant Income (₹)</label>
+                        <input type="number" id="coIncome" min="0" value="3000">
+                        <span class="form-hint">Avg: ₹3,114</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanAmount">Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" min="0" value="20000" required>
+                        <span class="form-hint">Avg: ₹20,523</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanTerm">Loan Term (months)</label>
+                        <select id="loanTerm">
+                            <option value="12">12 months</option>
+                            <option value="24">24 months</option>
+                            <option value="36">36 months</option>
+                            <option value="48" selected>48 months</option>
+                            <option value="60">60 months</option>
+                            <option value="72">72 months</option>
+                            <option value="84">84 months</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dtiRatio">DTI Ratio</label>
+                        <input type="number" id="dtiRatio" min="0" max="1" step="0.01" value="0.35">
+                        <span class="form-hint">0.01 – 0.99 in dataset</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="employment">Employment Status</label>
+                        <select id="employment">
+                            <option value="Salaried">Salaried</option>
+                            <option value="Self-employed">Self-employed</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Unemployed">Unemployed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="education">Education Level</label>
+                        <select id="education">
+                            <option value="Graduate">Graduate</option>
+                            <option value="Not Graduate">Not Graduate</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="existingLoans">Existing Loans</label>
+                        <input type="number" id="existingLoans" min="0" max="10" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="savings">Savings (₹)</label>
+                        <input type="number" id="savings" min="0" value="15000">
+                    </div>
+                    <div class="form-group">
+                        <label for="collateral">Collateral Value (₹)</label>
+                        <input type="number" id="collateral" min="0" value="25000">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" min="18" max="70" value="35">
+                        <span class="form-hint">21 – 59 in dataset</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="dependents">Dependents</label>
+                        <input type="number" id="dependents" min="0" max="5" value="1">
+                        <span class="form-hint">0 – 5 in dataset</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="maritalStatus">Marital Status</label>
+                        <select id="maritalStatus">
+                            <option value="Married">Married</option>
+                            <option value="Single">Single</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanPurpose">Loan Purpose</label>
+                        <select id="loanPurpose">
+                            <option value="Business">Business</option>
+                            <option value="Car">Car</option>
+                            <option value="Education">Education</option>
+                            <option value="Home" selected>Home</option>
+                            <option value="Personal">Personal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="propertyArea">Property Area</label>
+                        <select id="propertyArea">
+                            <option value="Rural">Rural</option>
+                            <option value="Semiurban">Semiurban</option>
+                            <option value="Urban" selected>Urban</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender">
+                            <option value="Female">Female</option>
+                            <option value="Male" selected>Male</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="employerCategory">Employer Category</label>
+                        <select id="employerCategory">
+                            <option value="Business">Business</option>
+                            <option value="Government">Government</option>
+                            <option value="MNC">MNC</option>
+                            <option value="Private" selected>Private</option>
+                            <option value="Unemployed">Unemployed</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="predict-btn" id="predictBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Predict Loan Approval
+                </button>
+            </form>
+
+            <!-- Result -->
+            <div class="predict-result hidden" id="predictResult">
+                <div class="result-icon" id="resultIcon"></div>
+                <h3 class="result-title" id="resultTitle"></h3>
+                <div class="result-confidence" id="resultConfidence"></div>
+                <div class="result-factors" id="resultFactors"></div>
+                <div class="result-all-models" id="resultAllModels"></div>
+                <div class="result-disclaimer">
+                    ✅ This prediction uses the <strong>actual trained ML model</strong> (coefficients/parameters exported from scikit-learn). 
+                    The model runs entirely in your browser — no backend server needed.
+                    See the <a href="#limitations">Limitations</a> section for dataset caveats.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-text">LoanSense<span class="brand-dot">.</span>AI</span>
+                <p class="footer-tagline">AI/ML Project — Loan Approval System</p>
+            </div>
+            <div class="footer-info">
+                <p>Dataset: <code>loan_approval_data.csv</code> — 1,000 records × 20 features</p>
+                <p>Models: Logistic Regression · Naive Bayes · KNN</p>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="model_data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
