@@ -3,980 +3,1774 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loan Approval System — AI/ML Project Dashboard</title>
-    <meta name="description" content="Interactive dashboard for Loan Approval System ML project with dataset analysis, limitations, and prediction insights.">
+    <title>LoanSense.AI — Intelligent Underwriting & Risk Prediction System</title>
+    <meta name="description" content="Production-grade client-side machine learning platform for loan approval underwriting analysis and real-time prediction using scikit-learn models.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Ambient Background -->
-    <div class="ambient-bg">
+    <!-- Accessible Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Lucide Inline SVG Sprite (Universal Offline Execution) -->
+    <svg style="display:none" aria-hidden="true" id="lucide-sprite">
+      <defs>
+        <symbol id="i-landmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/><line x1="2" y1="11" x2="22" y2="11"/></symbol>
+        <symbol id="i-layout-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+        <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></symbol>
+        <symbol id="i-triangle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+        <symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol>
+        <symbol id="i-brain-circuit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M9 13a4.5 4.5 0 0 0 3-4"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M12 13h4"/><path d="M12 18h6a2 2 0 0 1 2 2v1"/><path d="M12 8h8"/><path d="M16 8V5a2 2 0 0 1 2-2"/><circle cx="16" cy="13" r=".5"/><circle cx="18" cy="3" r=".5"/><circle cx="20" cy="21" r=".5"/><circle cx="20" cy="8" r=".5"/></symbol>
+        <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></symbol>
+        <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+        <symbol id="i-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+        <symbol id="i-circle-check-big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></symbol>
+        <symbol id="i-circle-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+        <symbol id="i-circle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></symbol>
+        <symbol id="i-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+        <symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></symbol>
+        <symbol id="i-trending-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></symbol>
+        <symbol id="i-users-round" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></symbol>
+        <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+        <symbol id="i-flask-conical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2\"/><path d="M8.5 2h7"/><path d="M7 16h10"/></symbol>
+        <symbol id="i-calendar-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 4.2A2 2 0 0 0 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 1.8-1.2"/><path d="M21 15V6a2 2 0 0 0-2-2H9"/><path d="M16 2v4"/><path d="M3 10h7"/><path d="M21 10h-5.5"/><line x1="2" y1="2" x2="22" y2="22"/></symbol>
+        <symbol id="i-boxes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></symbol>
+        <symbol id="i-chart-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+        <symbol id="i-chart-column" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+        <symbol id="i-scatter-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor"/><circle cx="18.5" cy="5.5" r="1.5" fill="currentColor"/><circle cx="11.5" cy="11.5" r="1.5" fill="currentColor"/><circle cx="7.5" cy="16.5" r="1.5" fill="currentColor"/><circle cx="17.5" cy="14.5" r="1.5" fill="currentColor"/><line x1="3" y1="3" x2="3" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/></symbol>
+        <symbol id="i-wand-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></symbol>
+        <symbol id="i-rotate-ccw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+        <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+        <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+        <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+        <symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+        <symbol id="i-arrow-down-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10"/><path d="M17 7v10H7"/></symbol>
+        <symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></symbol>
+        <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></symbol>
+        <symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+        <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+        <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+        <symbol id="i-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+        <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+        <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+        <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></symbol>
+        <symbol id="i-banknote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
+        <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+        <symbol id="i-percent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+        <symbol id="i-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></symbol>
+        <symbol id="i-house" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+        <symbol id="i-graduation-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+        <symbol id="i-cake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v2"/><path d="M12 8v2"/><path d="M17 8v2"/><path d="M7 4h.01"/><path d="M12 4h.01"/><path d="M17 4h.01"/></symbol>
+        <symbol id="i-piggy-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"/><path d="M2 9v1c0 1.1.9 2 2 2h1"/><path d="M16 11h.01"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+        <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+        <symbol id="i-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+        <symbol id="i-file-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+        <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+      </defs>
+    </svg>
+
+    <!-- Ambient Subtle Background -->
+    <div class="ambient-bg" aria-hidden="true">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-brand">
-            <div class="logo-icon">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <rect x="2" y="2" width="24" height="24" rx="6" stroke="url(#logoGrad)" stroke-width="2.5"/>
-                    <path d="M9 14L12.5 17.5L19 11" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <defs>
-                        <linearGradient id="logoGrad" x1="2" y1="2" x2="26" y2="26">
-                            <stop stop-color="#6366f1"/>
-                            <stop offset="1" stop-color="#a78bfa"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </div>
-            <span class="brand-text">LoanSense<span class="brand-dot">.</span>AI</span>
-        </div>
-        <div class="nav-links">
-            <a href="#overview" class="nav-link active" data-section="overview">Overview</a>
-            <a href="#dataset" class="nav-link" data-section="dataset">Dataset</a>
-            <a href="#limitations" class="nav-link" data-section="limitations">Limitations</a>
-            <a href="#insights" class="nav-link" data-section="insights">Insights</a>
-            <a href="#models" class="nav-link" data-section="models">Models</a>
-            <a href="#predict" class="nav-link" data-section="predict">Predict</a>
-        </div>
-        <div class="nav-status">
-            <span class="status-dot"></span>
-            <span class="status-text">Model Active</span>
-        </div>
-    </nav>
+    <!-- Sticky Header & Navbar -->
+    <header class="navbar-wrapper">
+        <div class="scroll-progress-bar" id="scrollProgressBar" role="progressbar" aria-label="Page reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <nav class="navbar" id="navbar" aria-label="Primary navigation">
+            <!-- Brand Logo -->
+            <a href="#overview" class="nav-brand" aria-label="LoanSense.AI Home">
+                <div class="brand-icon-box">
+                    <svg class="icon"><use href="#i-landmark"/></svg>
+                </div>
+                <span class="brand-text">LoanSense<span class="brand-dot">.</span>AI</span>
+            </a>
 
-    <!-- Hero Section -->
-    <section class="hero" id="overview">
-        <div class="hero-content">
-            <div class="hero-badge">AI/ML Classification Project</div>
-            <h1 class="hero-title">
-                Loan Approval
-                <span class="gradient-text">Prediction System</span>
-            </h1>
-            <p class="hero-subtitle">
-                A machine learning pipeline analyzing 1,000 loan applications across 20 features using 
-                Logistic Regression, Naive Bayes, and KNN classifiers to predict loan approval outcomes.
-            </p>
+            <!-- Desktop Nav Links with Icons -->
+            <div class="nav-links" role="menubar">
+                <a href="#overview" class="nav-link active" data-section="overview" role="menuitem">
+                    <svg class="icon"><use href="#i-layout-dashboard"/></svg>
+                    <span>Overview</span>
+                </a>
+                <a href="#dataset" class="nav-link" data-section="dataset" role="menuitem">
+                    <svg class="icon"><use href="#i-database"/></svg>
+                    <span>Dataset</span>
+                </a>
+                <a href="#limitations" class="nav-link" data-section="limitations" role="menuitem">
+                    <svg class="icon"><use href="#i-triangle-alert"/></svg>
+                    <span>Limitations</span>
+                </a>
+                <a href="#insights" class="nav-link" data-section="insights" role="menuitem">
+                    <svg class="icon"><use href="#i-lightbulb"/></svg>
+                    <span>Insights</span>
+                </a>
+                <a href="#models" class="nav-link" data-section="models" role="menuitem">
+                    <svg class="icon"><use href="#i-brain-circuit"/></svg>
+                    <span>Models</span>
+                </a>
+                <a href="#predict" class="nav-link" data-section="predict" role="menuitem">
+                    <svg class="icon"><use href="#i-sparkles"/></svg>
+                    <span>Predict</span>
+                </a>
+            </div>
+
+            <!-- Right Actions: Status Chip, Theme Toggle, CTA & Mobile Toggle -->
+            <div class="nav-actions">
+                <div class="nav-status" id="navStatusChip" aria-live="polite">
+                    <span class="status-dot"></span>
+                    <span class="status-text" id="navStatusText">Model Active · Naive Bayes</span>
+                </div>
+
+                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Switch between light and dark theme">
+                    <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+                    <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+                </button>
+
+                <a href="#predict" class="btn-nav-cta">
+                    <svg class="icon"><use href="#i-wand-sparkles"/></svg>
+                    <span>Try Prediction</span>
+                </a>
+
+                <button type="button" class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Open navigation drawer" aria-expanded="false" aria-controls="mobileDrawer">
+                    <svg class="icon menu-icon-open"><use href="#i-menu"/></svg>
+                    <svg class="icon menu-icon-close"><use href="#i-x"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+            <div class="drawer-backdrop" id="drawerBackdrop"></div>
+            <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+                <div class="drawer-links">
+                    <a href="#overview" class="drawer-link active" data-section="overview">
+                        <svg class="icon"><use href="#i-layout-dashboard"/></svg>
+                        <span>Overview</span>
+                    </a>
+                    <a href="#dataset" class="drawer-link" data-section="dataset">
+                        <svg class="icon"><use href="#i-database"/></svg>
+                        <span>Dataset</span>
+                    </a>
+                    <a href="#limitations" class="drawer-link" data-section="limitations">
+                        <svg class="icon"><use href="#i-triangle-alert"/></svg>
+                        <span>Limitations</span>
+                    </a>
+                    <a href="#insights" class="drawer-link" data-section="insights">
+                        <svg class="icon"><use href="#i-lightbulb"/></svg>
+                        <span>Insights</span>
+                    </a>
+                    <a href="#models" class="drawer-link" data-section="models">
+                        <svg class="icon"><use href="#i-brain-circuit"/></svg>
+                        <span>Models</span>
+                    </a>
+                    <a href="#predict" class="drawer-link" data-section="predict">
+                        <svg class="icon"><use href="#i-sparkles"/></svg>
+                        <span>Predict</span>
+                    </a>
+                </div>
+                <a href="#predict" class="btn btn-primary" style="width: 100%; margin-top: auto;">
+                    <svg class="icon"><use href="#i-wand-sparkles"/></svg>
+                    <span>Try Prediction</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section (2-Column Desktop Grid) -->
+        <section class="hero" id="overview">
+            <div class="hero-grid">
+                <!-- Left: Headline & CTAs -->
+                <div class="hero-main">
+                    <div class="hero-badge">
+                        <svg class="icon"><use href="#i-cpu"/></svg>
+                        <span>Client-Side ML Classification Engine</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Loan Approval
+                        <span class="gradient-text">Prediction System</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        An end-to-end machine learning underwriting pipeline analyzing 1,000 loan applications across 20 applicant dimensions. Powered by Logistic Regression, Naive Bayes, and KNN models executing locally in your browser.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="#predict" class="btn btn-primary">
+                            <svg class="icon"><use href="#i-wand-sparkles"/></svg>
+                            <span>Try a Prediction</span>
+                        </a>
+                        <a href="#models" class="btn btn-secondary">
+                            <svg class="icon"><use href="#i-chart-column"/></svg>
+                            <span>View Model Results</span>
+                        </a>
+                    </div>
+                    <div class="trust-row">
+                        <div class="trust-item">
+                            <svg class="icon"><use href="#i-shield-check"/></svg>
+                            <span>Runs 100% in your browser</span>
+                        </div>
+                        <div class="trust-item">
+                            <svg class="icon"><use href="#i-cpu"/></svg>
+                            <span>No data leaves your device</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Live Mini-Preview Benchmark Card -->
+                <div class="hero-preview-col">
+                    <div class="hero-preview-card" id="heroPreviewCard">
+                        <div class="preview-card-header">
+                            <div>
+                                <div class="preview-header-meta">Trained Champion Model</div>
+                                <div class="preview-header-title">
+                                    Gaussian Naive Bayes
+                                    <span class="badge-champion">Best F1</span>
+                                </div>
+                            </div>
+                            <div class="brand-icon-box">
+                                <svg class="icon"><use href="#i-chart-column"/></svg>
+                            </div>
+                        </div>
+
+                        <div class="preview-gauges-grid">
+                            <div class="preview-gauge-item">
+                                <div class="preview-gauge-label">Test Accuracy</div>
+                                <div class="preview-gauge-value success" id="heroAccuracyVal">88.0%</div>
+                                <div class="preview-bar-track">
+                                    <div class="preview-bar-fill success" id="heroAccuracyBar" style="width: 88%;"></div>
+                                </div>
+                            </div>
+                            <div class="preview-gauge-item">
+                                <div class="preview-gauge-label">F1-Score (Harmonic)</div>
+                                <div class="preview-gauge-value brand" id="heroF1Val">80.2%</div>
+                                <div class="preview-bar-track">
+                                    <div class="preview-bar-fill brand" id="heroF1Bar" style="width: 80.2%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preview-comparison-ticker">
+                            <div class="ticker-row">
+                                <span>Logistic Regression (Linear)</span>
+                                <span class="ticker-value" id="heroLRSummary">79.1% F1 · 87.0% Acc</span>
+                            </div>
+                            <div class="ticker-row">
+                                <span>KNN Classifier (K=5)</span>
+                                <span class="ticker-value" id="heroKNNSummary">55.1% F1 · 75.0% Acc</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Hero Stats (Consistent Numbers across Page) -->
             <div class="hero-stats">
                 <div class="hero-stat">
                     <div class="hero-stat-value">1,000</div>
-                    <div class="hero-stat-label">Applications</div>
+                    <div class="hero-stat-label">Total Applications</div>
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-value">20</div>
-                    <div class="hero-stat-label">Features</div>
+                    <div class="hero-stat-label">Schema Features</div>
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-value">3</div>
-                    <div class="hero-stat-label">ML Models</div>
+                    <div class="hero-stat-label">ML Classifiers</div>
                 </div>
                 <div class="hero-stat">
                     <div class="hero-stat-value">5%</div>
-                    <div class="hero-stat-label">Missing Data</div>
+                    <div class="hero-stat-label">Missing per Column</div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Dataset Overview Section -->
-    <section class="section" id="dataset">
-        <div class="section-header">
-            <div class="section-icon">📊</div>
-            <h2 class="section-title">Dataset Overview</h2>
-            <p class="section-desc">Comprehensive analysis of the loan approval dataset — structure, distributions, and quality metrics.</p>
-        </div>
+        <!-- Dataset Overview Section -->
+        <section class="section" id="dataset">
+            <div class="section-header">
+                <div class="section-icon-box">
+                    <svg class="icon"><use href="#i-database"/></svg>
+                </div>
+                <h2 class="section-title">Dataset Overview</h2>
+                <p class="section-desc">Comprehensive analysis of the loan underwriting dataset — structure, class distributions, and quality metrics.</p>
+            </div>
 
-        <!-- Quick Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card" id="stat-total">
-                <div class="stat-card-icon blue">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <!-- Quick Stats Cards (Cleaned of misleading +100% trend) -->
+            <div class="stats-grid">
+                <div class="stat-card" id="stat-total">
+                    <div class="stat-card-icon blue">
+                        <svg class="icon"><use href="#i-users"/></svg>
+                    </div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" data-count="1000">0</div>
+                        <div class="stat-card-label">Total Applications</div>
+                    </div>
+                    <div class="stat-card-trend">Cohort Size</div>
                 </div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value" data-count="1000">0</div>
-                    <div class="stat-card-label">Total Records</div>
-                </div>
-                <div class="stat-card-trend up">+100%</div>
-            </div>
-            <div class="stat-card" id="stat-approved">
-                <div class="stat-card-icon green">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value" data-count="298">0</div>
-                    <div class="stat-card-label">Approved (31.4%)</div>
-                </div>
-                <div class="stat-card-trend down">Minority</div>
-            </div>
-            <div class="stat-card" id="stat-rejected">
-                <div class="stat-card-icon red">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-                </div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value" data-count="652">0</div>
-                    <div class="stat-card-label">Rejected (68.6%)</div>
-                </div>
-                <div class="stat-card-trend up">Majority</div>
-            </div>
-            <div class="stat-card" id="stat-missing">
-                <div class="stat-card-icon amber">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value">5%</div>
-                    <div class="stat-card-label">Missing per Column</div>
-                </div>
-                <div class="stat-card-trend neutral">50 rows each</div>
-            </div>
-        </div>
 
-        <!-- Feature Table -->
-        <div class="card feature-table-card">
-            <div class="card-header">
-                <h3 class="card-title">Feature Schema</h3>
-                <div class="card-badge">20 Columns</div>
-            </div>
-            <div class="table-wrapper">
-                <table class="feature-table" id="featureTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Feature</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Missing</th>
-                            <th>Sample Values</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1</td><td><code>Applicant_ID</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Identifier</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>1–1000</td></tr>
-                        <tr><td>2</td><td><code>Applicant_Income</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹2,009 — ₹19,988</td></tr>
-                        <tr><td>3</td><td><code>Coapplicant_Income</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹0 — ₹9,981</td></tr>
-                        <tr><td>4</td><td><code>Employment_Status</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Salaried, Self-employed, Contract, Unemployed</td></tr>
-                        <tr><td>5</td><td><code>Age</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>21 — 59 yrs</td></tr>
-                        <tr><td>6</td><td><code>Marital_Status</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Married, Single</td></tr>
-                        <tr><td>7</td><td><code>Dependents</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>0 — 5</td></tr>
-                        <tr><td>8</td><td><code>Credit_Score</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>550 — 799</td></tr>
-                        <tr><td>9</td><td><code>Existing_Loans</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>0 — 5</td></tr>
-                        <tr><td>10</td><td><code>DTI_Ratio</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>0.01 — 0.99</td></tr>
-                        <tr><td>11</td><td><code>Savings</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹102 — ₹49,960</td></tr>
-                        <tr><td>12</td><td><code>Collateral_Value</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹33 — ₹49,978</td></tr>
-                        <tr><td>13</td><td><code>Loan_Amount</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Loan</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>₹1,015 — ₹39,995</td></tr>
-                        <tr><td>14</td><td><code>Loan_Term</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Loan</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>12 — 84 months</td></tr>
-                        <tr><td>15</td><td><code>Loan_Purpose</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Loan</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Personal, Car, Home, Education, Business</td></tr>
-                        <tr><td>16</td><td><code>Property_Area</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Location</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Urban, Semiurban, Rural</td></tr>
-                        <tr><td>17</td><td><code>Education_Level</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Graduate, Not Graduate</td></tr>
-                        <tr><td>18</td><td><code>Gender</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Male (571), Female (379)</td></tr>
-                        <tr><td>19</td><td><code>Employer_Category</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Private, Government, MNC, Business, Unemployed</td></tr>
-                        <tr class="target-row"><td>20</td><td><code>Loan_Approved</code></td><td><span class="type-badge target">Target</span></td><td>Output</td><td><span class="missing-bar"><span style="width:5%"></span></span> 5%</td><td>Yes (298) / No (652)</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div class="stat-card" id="stat-approved">
+                    <div class="stat-card-icon green">
+                        <svg class="icon"><use href="#i-circle-check"/></svg>
+                    </div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" data-count="298">0</div>
+                        <div class="stat-card-label">Approved (31.4%)</div>
+                    </div>
+                    <div class="stat-card-trend">Minority Cohort</div>
+                </div>
 
-        <!-- Distribution Charts -->
-        <div class="charts-grid">
-            <div class="card chart-card">
+                <div class="stat-card" id="stat-rejected">
+                    <div class="stat-card-icon red">
+                        <svg class="icon"><use href="#i-circle-x"/></svg>
+                    </div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value" data-count="652">0</div>
+                        <div class="stat-card-label">Rejected (68.6%)</div>
+                    </div>
+                    <div class="stat-card-trend">Majority Cohort</div>
+                </div>
+
+                <div class="stat-card" id="stat-missing">
+                    <div class="stat-card-icon amber">
+                        <svg class="icon"><use href="#i-circle-alert"/></svg>
+                    </div>
+                    <div class="stat-card-content">
+                        <div class="stat-card-value">5.0%</div>
+                        <div class="stat-card-label">Missing per Column</div>
+                    </div>
+                    <div class="stat-card-trend">50 rows each</div>
+                </div>
+            </div>
+
+            <!-- Feature Schema Table with Search & Category Filters -->
+            <div class="card feature-table-card">
                 <div class="card-header">
-                    <h3 class="card-title">Target Distribution</h3>
-                    <div class="card-badge warning">Imbalanced</div>
+                    <h3 class="card-title">Feature Schema & Quality</h3>
+                    <div class="card-badge">20 Columns</div>
                 </div>
-                <div class="donut-chart-container">
-                    <div class="donut-chart" id="targetDonut">
-                        <svg viewBox="0 0 200 200">
-                            <circle cx="100" cy="100" r="80" fill="none" stroke="#1e1b4b" stroke-width="24"/>
-                            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#rejectGrad)" stroke-width="24"
-                                stroke-dasharray="345.6 502.65" stroke-dashoffset="-125.66" stroke-linecap="round" class="donut-segment reject-seg"/>
-                            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#approveGrad)" stroke-width="24"
-                                stroke-dasharray="157.08 502.65" stroke-dashoffset="-125.66" stroke-linecap="round" class="donut-segment approve-seg"/>
-                            <defs>
-                                <linearGradient id="approveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#34d399"/>
-                                    <stop offset="100%" stop-color="#6ee7b7"/>
-                                </linearGradient>
-                                <linearGradient id="rejectGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#f87171"/>
-                                    <stop offset="100%" stop-color="#fca5a5"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="donut-center">
-                            <div class="donut-ratio">1:2.2</div>
-                            <div class="donut-label">Imbalance Ratio</div>
-                        </div>
+
+                <div class="table-filter-bar">
+                    <div class="table-search-box">
+                        <svg class="icon"><use href="#i-search"/></svg>
+                        <input type="search" id="featureTableSearch" class="table-search-input" placeholder="Search feature name or category..." aria-label="Filter feature table">
                     </div>
-                    <div class="donut-legend">
-                        <div class="legend-item">
-                            <span class="legend-color green"></span>
-                            <span class="legend-text">Approved — 298 (31.4%)</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color red"></span>
-                            <span class="legend-text">Rejected — 652 (68.6%)</span>
-                        </div>
+                    <div class="category-chips" id="categoryChips">
+                        <button type="button" class="category-chip active" data-category="all">All (20)</button>
+                        <button type="button" class="category-chip" data-category="Financial">Financial (7)</button>
+                        <button type="button" class="category-chip" data-category="Personal">Personal (7)</button>
+                        <button type="button" class="category-chip" data-category="Loan">Loan (3)</button>
+                        <button type="button" class="category-chip" data-category="Location">Location (1)</button>
+                        <button type="button" class="category-chip" data-category="Output">Output (1)</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="card chart-card">
-                <div class="card-header">
-                    <h3 class="card-title">Credit Score Distribution</h3>
-                    <div class="card-badge success">Key Predictor</div>
-                </div>
-                <div class="bar-chart-container">
-                    <div class="bar-group">
-                        <div class="bar-label">Rejected Avg</div>
-                        <div class="bar-track">
-                            <div class="bar-fill red" style="width: 81.5%;" data-value="651.6">
-                                <span class="bar-value">651.6</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-group">
-                        <div class="bar-label">Approved Avg</div>
-                        <div class="bar-track">
-                            <div class="bar-fill green" style="width: 91%;" data-value="726.9">
-                                <span class="bar-value">726.9</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-separator"></div>
-                    <div class="bar-group">
-                        <div class="bar-label">Min Score</div>
-                        <div class="bar-track">
-                            <div class="bar-fill purple" style="width: 68.8%;" data-value="550">
-                                <span class="bar-value">550</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-group">
-                        <div class="bar-label">Max Score</div>
-                        <div class="bar-track">
-                            <div class="bar-fill purple" style="width: 100%;" data-value="799">
-                                <span class="bar-value">799</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bar-separator"></div>
-                    <div class="bar-group">
-                        <div class="bar-label">Threshold</div>
-                        <div class="bar-track">
-                            <div class="bar-fill amber" style="width: 81.4%;" data-value="~651">
-                                <span class="bar-value">~651</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="chart-note">Credit Score is the strongest separator between approved and rejected applications.</p>
+                <div class="table-wrapper">
+                    <table class="feature-table" id="featureTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Feature</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Missing Rate</th>
+                                <th>Sample Distribution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-cat="Identifier"><td>1</td><td><code>Applicant_ID</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Identifier</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>1 – 1,000</td></tr>
+                            <tr data-cat="Financial"><td>2</td><td><code>Applicant_Income</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>₹2,009 — ₹19,988</td></tr>
+                            <tr data-cat="Financial"><td>3</td><td><code>Coapplicant_Income</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>₹0 — ₹9,981</td></tr>
+                            <tr data-cat="Personal"><td>4</td><td><code>Employment_Status</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Salaried, Self-employed, Contract, Unemployed</td></tr>
+                            <tr data-cat="Personal"><td>5</td><td><code>Age</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>21 — 59 yrs</td></tr>
+                            <tr data-cat="Personal"><td>6</td><td><code>Marital_Status</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Married, Single</td></tr>
+                            <tr data-cat="Personal"><td>7</td><td><code>Dependents</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>0 — 5 dependents</td></tr>
+                            <tr data-cat="Financial"><td>8</td><td><code>Credit_Score</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>550 — 799</td></tr>
+                            <tr data-cat="Financial"><td>9</td><td><code>Existing_Loans</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>0 — 5 active</td></tr>
+                            <tr data-cat="Financial"><td>10</td><td><code>DTI_Ratio</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>0.01 — 0.99 (DTI)</td></tr>
+                            <tr data-cat="Financial"><td>11</td><td><code>Savings</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>₹102 — ₹49,960</td></tr>
+                            <tr data-cat="Financial"><td>12</td><td><code>Collateral_Value</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Financial</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>₹33 — ₹49,978</td></tr>
+                            <tr data-cat="Loan"><td>13</td><td><code>Loan_Amount</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Loan</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>₹1,015 — ₹39,995</td></tr>
+                            <tr data-cat="Loan"><td>14</td><td><code>Loan_Term</code></td><td><span class="type-badge numeric">Numeric</span></td><td>Loan</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>12 — 84 months</td></tr>
+                            <tr data-cat="Loan"><td>15</td><td><code>Loan_Purpose</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Loan</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Personal, Car, Home, Education, Business</td></tr>
+                            <tr data-cat="Location"><td>16</td><td><code>Property_Area</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Location</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Urban, Semiurban, Rural</td></tr>
+                            <tr data-cat="Personal"><td>17</td><td><code>Education_Level</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Graduate, Not Graduate</td></tr>
+                            <tr data-cat="Personal"><td>18</td><td><code>Gender</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Male (571), Female (379)</td></tr>
+                            <tr data-cat="Personal"><td>19</td><td><code>Employer_Category</code></td><td><span class="type-badge categorical">Categorical</span></td><td>Personal</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Private, Government, MNC, Business, Unemployed</td></tr>
+                            <tr data-cat="Output" class="target-row"><td>20</td><td><code>Loan_Approved</code></td><td><span class="type-badge target">Target</span></td><td>Output</td><td><span class="missing-progress-wrap"><span class="missing-bar-track"><span class="missing-bar-fill" style="width:5%"></span></span> 5%</span></td><td>Approved (298) / Rejected (652)</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="card chart-card">
-                <div class="card-header">
-                    <h3 class="card-title">Approval by Employment</h3>
-                </div>
-                <div class="horizontal-bars">
-                    <div class="h-bar-group">
-                        <div class="h-bar-header">
-                            <span class="h-bar-label">Contract</span>
-                            <span class="h-bar-pct">39.7%</span>
-                        </div>
-                        <div class="h-bar-track">
-                            <div class="h-bar-fill" style="width: 39.7%; background: linear-gradient(90deg, #34d399, #6ee7b7);"></div>
-                        </div>
-                    </div>
-                    <div class="h-bar-group">
-                        <div class="h-bar-header">
-                            <span class="h-bar-label">Self-employed</span>
-                            <span class="h-bar-pct">31.2%</span>
-                        </div>
-                        <div class="h-bar-track">
-                            <div class="h-bar-fill" style="width: 31.2%; background: linear-gradient(90deg, #60a5fa, #93c5fd);"></div>
-                        </div>
-                    </div>
-                    <div class="h-bar-group">
-                        <div class="h-bar-header">
-                            <span class="h-bar-label">Salaried</span>
-                            <span class="h-bar-pct">29.2%</span>
-                        </div>
-                        <div class="h-bar-track">
-                            <div class="h-bar-fill" style="width: 29.2%; background: linear-gradient(90deg, #a78bfa, #c4b5fd);"></div>
-                        </div>
-                    </div>
-                    <div class="h-bar-group">
-                        <div class="h-bar-header">
-                            <span class="h-bar-label">Unemployed</span>
-                            <span class="h-bar-pct">24.4%</span>
-                        </div>
-                        <div class="h-bar-track">
-                            <div class="h-bar-fill" style="width: 24.4%; background: linear-gradient(90deg, #f87171, #fca5a5);"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card chart-card">
-                <div class="card-header">
-                    <h3 class="card-title">Income by Outcome</h3>
-                </div>
-                <div class="income-comparison">
-                    <div class="income-block rejected">
-                        <div class="income-icon">✗</div>
-                        <div class="income-label">Rejected</div>
-                        <div class="income-value">₹10,406</div>
-                        <div class="income-sub">avg income</div>
-                        <div class="income-range">₹2,009 — ₹19,988</div>
-                    </div>
-                    <div class="income-vs">VS</div>
-                    <div class="income-block approved">
-                        <div class="income-icon">✓</div>
-                        <div class="income-label">Approved</div>
-                        <div class="income-value">₹11,797</div>
-                        <div class="income-sub">avg income</div>
-                        <div class="income-range">₹2,020 — ₹19,955</div>
-                    </div>
-                </div>
-                <p class="chart-note">Only ~₹1,400 difference in mean income — income alone is a weak predictor.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Limitations Section -->
-    <section class="section limitations-section" id="limitations">
-        <div class="section-header">
-            <div class="section-icon">⚠️</div>
-            <h2 class="section-title">Dataset Limitations</h2>
-            <p class="section-desc">Critical issues that impact model reliability, fairness, and real-world deployment.</p>
-        </div>
-
-        <div class="limitations-grid">
-            <!-- Limitation 1: Class Imbalance -->
-            <div class="limitation-card severity-high">
-                <div class="limitation-severity">
-                    <span class="severity-dot high"></span>
-                    HIGH SEVERITY
-                </div>
-                <div class="limitation-icon">⚖️</div>
-                <h3 class="limitation-title">Class Imbalance</h3>
-                <p class="limitation-desc">
-                    The target variable is heavily skewed — <strong>68.6% rejected</strong> vs <strong>31.4% approved</strong> (ratio 1:2.2). 
-                    Models trained on this data will be biased toward predicting "No" (rejection), artificially inflating accuracy while 
-                    performing poorly on the minority class.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>High accuracy ≠ good model (accuracy paradox)</li>
-                        <li>Poor recall for approved loans</li>
-                        <li>Model may default to always predicting "Rejected"</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">SMOTE</span>
-                    <span class="mitigation-tag">Class Weights</span>
-                    <span class="mitigation-tag">F1-Score Metric</span>
-                    <span class="mitigation-tag">Stratified Split</span>
-                </div>
-            </div>
-
-            <!-- Limitation 2: Missing Values -->
-            <div class="limitation-card severity-high">
-                <div class="limitation-severity">
-                    <span class="severity-dot high"></span>
-                    HIGH SEVERITY
-                </div>
-                <div class="limitation-icon">🕳️</div>
-                <h3 class="limitation-title">Uniform Missing Data Pattern</h3>
-                <p class="limitation-desc">
-                    Exactly <strong>50 values (5%) are missing per every column</strong> — including the target variable. 
-                    This suspiciously uniform pattern suggests the data may be <strong>synthetically generated</strong> rather than 
-                    collected from real-world loan applications. Real data would have non-uniform missing patterns.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>50 rows have missing target labels — can't be used for training</li>
-                        <li>Uniform missingness hints at artificial dataset</li>
-                        <li>Imputation strategy choice significantly affects results</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">SimpleImputer (mean/mode)</span>
-                    <span class="mitigation-tag">Drop target-null rows</span>
-                    <span class="mitigation-tag">MICE Imputation</span>
-                </div>
-            </div>
-
-            <!-- Limitation 3: Small Sample -->
-            <div class="limitation-card severity-medium">
-                <div class="limitation-severity">
-                    <span class="severity-dot medium"></span>
-                    MEDIUM SEVERITY
-                </div>
-                <div class="limitation-icon">📉</div>
-                <h3 class="limitation-title">Small Sample Size</h3>
-                <p class="limitation-desc">
-                    Only <strong>1,000 records</strong> (950 usable after dropping target nulls) with 20 features 
-                    is a relatively small dataset for building reliable ML models. This limits the model's ability to 
-                    learn complex, non-linear patterns and increases the risk of overfitting.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>High variance in cross-validation scores</li>
-                        <li>Risk of overfitting, especially with KNN</li>
-                        <li>After train-test split, only ~760 training samples</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">Cross-Validation</span>
-                    <span class="mitigation-tag">Regularization</span>
-                    <span class="mitigation-tag">Feature Selection</span>
-                </div>
-            </div>
-
-            <!-- Limitation 4: Gender Bias -->
-            <div class="limitation-card severity-high">
-                <div class="limitation-severity">
-                    <span class="severity-dot high"></span>
-                    HIGH SEVERITY
-                </div>
-                <div class="limitation-icon">🚻</div>
-                <h3 class="limitation-title">Gender Imbalance & Potential Bias</h3>
-                <p class="limitation-desc">
-                    The dataset contains <strong>571 males (60%) vs 379 females (40%)</strong>. 
-                    Female applicants show a slightly higher approval rate (34.2%) than males (28.8%). 
-                    Using gender as a feature risks encoding <strong>discriminatory patterns</strong> into the model.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>Model may learn gender-based discriminatory patterns</li>
-                        <li>Legal & ethical concerns in financial lending (ECOA, GDPR)</li>
-                        <li>Gender as a protected attribute shouldn't drive loan decisions</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">Drop Gender Feature</span>
-                    <span class="mitigation-tag">Fairness Auditing</span>
-                    <span class="mitigation-tag">Adversarial Debiasing</span>
-                </div>
-            </div>
-
-            <!-- Limitation 5: Weak Predictors -->
-            <div class="limitation-card severity-medium">
-                <div class="limitation-severity">
-                    <span class="severity-dot medium"></span>
-                    MEDIUM SEVERITY
-                </div>
-                <div class="limitation-icon">🎯</div>
-                <h3 class="limitation-title">Weak Feature Separability</h3>
-                <p class="limitation-desc">
-                    Most categorical features show <strong>nearly identical approval rates</strong> across categories: 
-                    Property Area (~30% all areas), Education (32.8% vs 27.2%), Marital Status (similar). 
-                    Only <strong>Credit Score</strong> (651.6 vs 726.9) and <strong>Employment Status</strong> show meaningful separation.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>Many features add noise rather than signal</li>
-                        <li>Models may not significantly outperform baseline</li>
-                        <li>Overfitting on irrelevant features</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">Feature Importance Analysis</span>
-                    <span class="mitigation-tag">PCA / Dimensionality Reduction</span>
-                    <span class="mitigation-tag">Remove Low-Variance Features</span>
-                </div>
-            </div>
-
-            <!-- Limitation 6: Synthetic Data -->
-            <div class="limitation-card severity-medium">
-                <div class="limitation-severity">
-                    <span class="severity-dot medium"></span>
-                    MEDIUM SEVERITY
-                </div>
-                <div class="limitation-icon">🧪</div>
-                <h3 class="limitation-title">Likely Synthetic / Simulated Data</h3>
-                <p class="limitation-desc">
-                    Multiple signals indicate the data is artificially generated: perfectly uniform 5% missing rate across ALL columns, 
-                    near-perfect uniform distribution of Loan Purpose categories (178–202 each), 
-                    zero duplicate rows, and suspiciously rounded statistics.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>Patterns learned won't generalize to real applications</li>
-                        <li>Correlations between features may not reflect reality</li>
-                        <li>Suitable for learning ML workflows, not production deployment</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">Acknowledge Limitations</span>
-                    <span class="mitigation-tag">Use Real Datasets for Validation</span>
-                    <span class="mitigation-tag">Focus on Methodology</span>
-                </div>
-            </div>
-
-            <!-- Limitation 7: No Temporal Data -->
-            <div class="limitation-card severity-low">
-                <div class="limitation-severity">
-                    <span class="severity-dot low"></span>
-                    LOW SEVERITY
-                </div>
-                <div class="limitation-icon">📅</div>
-                <h3 class="limitation-title">No Temporal Information</h3>
-                <p class="limitation-desc">
-                    The dataset lacks timestamps or date features. In real-world lending, 
-                    <strong>economic conditions, interest rates, and lending policies change over time</strong>. 
-                    Without temporal context, the model cannot account for time-based trends.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>Cannot detect concept drift or seasonal patterns</li>
-                        <li>No ability to model changing economic conditions</li>
-                        <li>Static snapshot may not represent current trends</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">Document Assumption</span>
-                    <span class="mitigation-tag">Regular Retraining</span>
-                </div>
-            </div>
-
-            <!-- Limitation 8: Limited Categories -->
-            <div class="limitation-card severity-low">
-                <div class="limitation-severity">
-                    <span class="severity-dot low"></span>
-                    LOW SEVERITY
-                </div>
-                <div class="limitation-icon">📦</div>
-                <h3 class="limitation-title">Oversimplified Categories</h3>
-                <p class="limitation-desc">
-                    Education is binary (Graduate / Not Graduate), Gender is binary, Property Area has only 3 levels. 
-                    Real-world data would have more granular categories (PhD, Masters, High School, etc.) 
-                    which could provide better predictive power.
-                </p>
-                <div class="limitation-impact">
-                    <h4>Impact</h4>
-                    <ul>
-                        <li>Loss of potentially important granular information</li>
-                        <li>Binary features limit feature interaction patterns</li>
-                        <li>Non-binary gender identities are excluded</li>
-                    </ul>
-                </div>
-                <div class="limitation-mitigation">
-                    <h4>Mitigation</h4>
-                    <span class="mitigation-tag">Feature Engineering</span>
-                    <span class="mitigation-tag">Interaction Terms</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Insights Section -->
-    <section class="section" id="insights">
-        <div class="section-header">
-            <div class="section-icon">💡</div>
-            <h2 class="section-title">Key Insights</h2>
-            <p class="section-desc">Data-driven findings that reveal patterns in loan approval decisions.</p>
-        </div>
-
-        <div class="insights-grid">
-            <div class="insight-card highlight">
-                <div class="insight-number">01</div>
-                <h3 class="insight-title">Credit Score is the Strongest Predictor</h3>
-                <p class="insight-desc">
-                    Approved applicants have an average credit score of <strong>726.9</strong> vs <strong>651.6</strong> for rejected ones — 
-                    a 75-point gap. The minimum credit score among approved applicants is 651, suggesting a clear threshold effect.
-                </p>
-                <div class="insight-metric">
-                    <span class="metric-label">Score Gap</span>
-                    <span class="metric-value">+75.3 pts</span>
-                </div>
-            </div>
-
-            <div class="insight-card">
-                <div class="insight-number">02</div>
-                <h3 class="insight-title">Income Matters Less Than Expected</h3>
-                <p class="insight-desc">
-                    The mean income difference between approved (₹11,797) and rejected (₹10,406) applicants is only ₹1,391 — 
-                    suggesting income alone is insufficient for prediction. The ranges overlap almost completely.
-                </p>
-                <div class="insight-metric">
-                    <span class="metric-label">Income Gap</span>
-                    <span class="metric-value">₹1,391</span>
-                </div>
-            </div>
-
-            <div class="insight-card">
-                <div class="insight-number">03</div>
-                <h3 class="insight-title">Contract Workers Get Most Approvals</h3>
-                <p class="insight-desc">
-                    Counter-intuitively, contract workers have the highest approval rate at <strong>39.7%</strong>, 
-                    while salaried employees are at 29.2%. This is unusual and may indicate data artifacts in the synthetic dataset.
-                </p>
-                <div class="insight-metric">
-                    <span class="metric-label">Contract Rate</span>
-                    <span class="metric-value">39.7%</span>
-                </div>
-            </div>
-
-            <div class="insight-card">
-                <div class="insight-number">04</div>
-                <h3 class="insight-title">Geographic Location Has Minimal Impact</h3>
-                <p class="insight-desc">
-                    Approval rates are nearly identical across areas: Urban (31.8%), Rural (30.2%), Semiurban (30.0%). 
-                    Property area provides almost no predictive signal for this dataset.
-                </p>
-                <div class="insight-metric">
-                    <span class="metric-label">Max Spread</span>
-                    <span class="metric-value">1.8%</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Model Evaluation Section -->
-    <section class="section" id="models">
-        <div class="section-header">
-            <div class="section-icon">🧠</div>
-            <h2 class="section-title">Model Evaluation</h2>
-            <p class="section-desc">Compare performance of all 3 trained classifiers. Click a model to view detailed metrics.</p>
-        </div>
-
-        <!-- Model Selector Tabs -->
-        <div class="model-tabs" id="modelTabs">
-            <button class="model-tab" data-model="logistic_regression">
-                <div class="model-tab-icon">📈</div>
-                <div class="model-tab-info">
-                    <span class="model-tab-name">Logistic Regression</span>
-                    <span class="model-tab-badge">Linear</span>
-                </div>
-                <div class="model-tab-f1" id="tabF1LR">—</div>
-            </button>
-            <button class="model-tab active" data-model="naive_bayes">
-                <div class="model-tab-icon">📊</div>
-                <div class="model-tab-info">
-                    <span class="model-tab-name">Naive Bayes</span>
-                    <span class="model-tab-badge best">Best Model</span>
-                </div>
-                <div class="model-tab-f1" id="tabF1NB">—</div>
-            </button>
-            <button class="model-tab" data-model="knn">
-                <div class="model-tab-icon">📍</div>
-                <div class="model-tab-info">
-                    <span class="model-tab-name">K-Nearest Neighbors</span>
-                    <span class="model-tab-badge">K=5</span>
-                </div>
-                <div class="model-tab-f1" id="tabF1KNN">—</div>
-            </button>
-        </div>
-
-        <!-- Metrics Display -->
-        <div class="metrics-display" id="metricsDisplay">
-            <!-- Metric Cards -->
-            <div class="metrics-cards">
-                <div class="metric-card">
-                    <div class="metric-card-label">Accuracy</div>
-                    <div class="metric-card-value" id="metricAccuracy">—</div>
-                    <div class="metric-card-bar"><div class="metric-bar-fill accuracy-fill" id="barAccuracy"></div></div>
-                    <div class="metric-card-desc">Correct predictions / Total</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-card-label">Precision</div>
-                    <div class="metric-card-value" id="metricPrecision">—</div>
-                    <div class="metric-card-bar"><div class="metric-bar-fill precision-fill" id="barPrecision"></div></div>
-                    <div class="metric-card-desc">TP / (TP + FP)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-card-label">Recall</div>
-                    <div class="metric-card-value" id="metricRecall">—</div>
-                    <div class="metric-card-bar"><div class="metric-bar-fill recall-fill" id="barRecall"></div></div>
-                    <div class="metric-card-desc">TP / (TP + FN)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-card-label">F1-Score</div>
-                    <div class="metric-card-value" id="metricF1">—</div>
-                    <div class="metric-card-bar"><div class="metric-bar-fill f1-fill" id="barF1"></div></div>
-                    <div class="metric-card-desc">Harmonic mean of P & R</div>
-                </div>
-            </div>
-
-            <!-- Confusion Matrix -->
-            <div class="cm-and-comparison">
-                <div class="card cm-card">
+            <!-- Distribution Charts (Pure Accessible CSS / SVG) -->
+            <div class="charts-grid">
+                <!-- Target Distribution Donut -->
+                <div class="card chart-card">
                     <div class="card-header">
-                        <h3 class="card-title">Confusion Matrix</h3>
-                        <div class="card-badge" id="cmModelLabel">—</div>
+                        <h3 class="card-title">Target Class Distribution</h3>
+                        <div class="card-badge warning">1:2.2 Ratio</div>
                     </div>
-                    <div class="cm-container">
-                        <div class="cm-labels-top">
-                            <div class="cm-spacer"></div>
-                            <div class="cm-col-label">Predicted No</div>
-                            <div class="cm-col-label">Predicted Yes</div>
+                    <div class="donut-chart-container">
+                        <div class="donut-chart" id="targetDonut" role="img" aria-label="Donut chart showing 31.4% approved and 68.6% rejected applications">
+                            <svg viewBox="0 0 200 200">
+                                <circle cx="100" cy="100" r="80" class="gauge-bg-circle"/>
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="var(--danger)" stroke-width="24"
+                                    stroke-dasharray="345.6 502.65" stroke-dashoffset="-125.66" stroke-linecap="round" class="donut-segment reject-seg"/>
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="var(--success)" stroke-width="24"
+                                    stroke-dasharray="157.08 502.65" stroke-dashoffset="-125.66" stroke-linecap="round" class="donut-segment approve-seg"/>
+                            </svg>
+                            <div class="donut-center">
+                                <div class="donut-ratio">1:2.2</div>
+                                <div class="donut-label">Imbalance Ratio</div>
+                            </div>
                         </div>
-                        <div class="cm-row">
-                            <div class="cm-row-label">Actual No</div>
-                            <div class="cm-cell tn" id="cmTN"><div class="cm-cell-value">—</div><div class="cm-cell-label">True Neg</div></div>
-                            <div class="cm-cell fp" id="cmFP"><div class="cm-cell-value">—</div><div class="cm-cell-label">False Pos</div></div>
-                        </div>
-                        <div class="cm-row">
-                            <div class="cm-row-label">Actual Yes</div>
-                            <div class="cm-cell fn" id="cmFN"><div class="cm-cell-value">—</div><div class="cm-cell-label">False Neg</div></div>
-                            <div class="cm-cell tp" id="cmTP"><div class="cm-cell-value">—</div><div class="cm-cell-label">True Pos</div></div>
-                        </div>
-                        <div class="cm-total">
-                            Test Set Size: <strong id="cmTotal">200</strong> samples
+                        <div class="donut-legend">
+                            <div class="legend-item">
+                                <span class="legend-pill"><span class="legend-color green"></span> Approved Cohort</span>
+                                <span class="font-bold tabular-nums">298 (31.4%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-pill"><span class="legend-color red"></span> Rejected Cohort</span>
+                                <span class="font-bold tabular-nums">652 (68.6%)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Comparison Table -->
-                <div class="card comparison-card">
+                <!-- Credit Score Distribution -->
+                <div class="card chart-card">
                     <div class="card-header">
-                        <h3 class="card-title">Model Comparison</h3>
-                        <div class="card-badge success">Side by Side</div>
+                        <h3 class="card-title">Credit Score Separability</h3>
+                        <div class="card-badge success">Key Predictor</div>
                     </div>
-                    <div class="comparison-table-wrapper">
-                        <table class="comparison-table" id="comparisonTable">
-                            <thead>
-                                <tr>
-                                    <th>Metric</th>
-                                    <th>Logistic Regression</th>
-                                    <th>Naive Bayes</th>
-                                    <th>KNN (K=5)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Accuracy</td>
-                                    <td id="cmpLRAcc">—</td>
-                                    <td id="cmpNBAcc">—</td>
-                                    <td id="cmpKNNAcc">—</td>
-                                </tr>
-                                <tr>
-                                    <td>Precision</td>
-                                    <td id="cmpLRPrec">—</td>
-                                    <td id="cmpNBPrec">—</td>
-                                    <td id="cmpKNNPrec">—</td>
-                                </tr>
-                                <tr>
-                                    <td>Recall</td>
-                                    <td id="cmpLRRec">—</td>
-                                    <td id="cmpNBRec">—</td>
-                                    <td id="cmpKNNRec">—</td>
-                                </tr>
-                                <tr>
-                                    <td>F1-Score</td>
-                                    <td id="cmpLRF1">—</td>
-                                    <td id="cmpNBF1">—</td>
-                                    <td id="cmpKNNF1">—</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="bar-chart-container">
+                        <div class="bar-group">
+                            <div class="bar-label">Rejected Applications (Mean)</div>
+                            <div class="bar-track">
+                                <div class="bar-fill red" style="width: 81.5%;" data-value="651.6">
+                                    <span class="bar-value">651.6 pts</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-label">Approved Applications (Mean)</div>
+                            <div class="bar-track">
+                                <div class="bar-fill green" style="width: 91%;" data-value="726.9">
+                                    <span class="bar-value">726.9 pts</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-separator"></div>
+                        <div class="bar-group">
+                            <div class="bar-label">Min Score in Dataset</div>
+                            <div class="bar-track">
+                                <div class="bar-fill purple" style="width: 68.8%;" data-value="550">
+                                    <span class="bar-value">550</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-label">Max Score in Dataset</div>
+                            <div class="bar-track">
+                                <div class="bar-fill purple" style="width: 100%;" data-value="799">
+                                    <span class="bar-value">799</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="chart-note">Credit score creates the widest mathematical separation between approved and rejected cohorts (+75.3 pts gap).</p>
                     </div>
-                    <div class="comparison-verdict" id="comparisonVerdict">
-                        Loading models...
+                </div>
+
+                <!-- Approval by Employment -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Approval Rates by Employment</h3>
+                        <div class="card-badge">Empirical</div>
+                    </div>
+                    <div class="horizontal-bars">
+                        <div class="h-bar-group">
+                            <div class="h-bar-header">
+                                <span class="h-bar-label">Contract</span>
+                                <span class="h-bar-pct">39.7%</span>
+                            </div>
+                            <div class="h-bar-track">
+                                <div class="h-bar-fill" style="width: 39.7%; background: var(--success);"></div>
+                            </div>
+                        </div>
+                        <div class="h-bar-group">
+                            <div class="h-bar-header">
+                                <span class="h-bar-label">Self-employed</span>
+                                <span class="h-bar-pct">31.2%</span>
+                            </div>
+                            <div class="h-bar-track">
+                                <div class="h-bar-fill" style="width: 31.2%; background: var(--info);"></div>
+                            </div>
+                        </div>
+                        <div class="h-bar-group">
+                            <div class="h-bar-header">
+                                <span class="h-bar-label">Salaried</span>
+                                <span class="h-bar-pct">29.2%</span>
+                            </div>
+                            <div class="h-bar-track">
+                                <div class="h-bar-fill" style="width: 29.2%; background: var(--brand-primary);"></div>
+                            </div>
+                        </div>
+                        <div class="h-bar-group">
+                            <div class="h-bar-header">
+                                <span class="h-bar-label">Unemployed</span>
+                                <span class="h-bar-pct">24.4%</span>
+                            </div>
+                            <div class="h-bar-track">
+                                <div class="h-bar-fill" style="width: 24.4%; background: var(--danger);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Income by Outcome -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Income Distribution by Outcome</h3>
+                        <div class="card-badge warning">Weak Predictor</div>
+                    </div>
+                    <div class="income-comparison">
+                        <div class="income-block rejected">
+                            <div class="income-icon-wrap">
+                                <svg class="icon"><use href="#i-x"/></svg>
+                            </div>
+                            <div class="income-label">Rejected Cohort</div>
+                            <div class="income-value">₹10,406</div>
+                            <div class="income-sub">mean monthly income</div>
+                            <div class="income-range">Range: ₹2,009 — ₹19,988</div>
+                        </div>
+                        <div class="income-vs">VS</div>
+                        <div class="income-block approved">
+                            <div class="income-icon-wrap">
+                                <svg class="icon"><use href="#i-check"/></svg>
+                            </div>
+                            <div class="income-label">Approved Cohort</div>
+                            <div class="income-value">₹11,797</div>
+                            <div class="income-sub">mean monthly income</div>
+                            <div class="income-range">Range: ₹2,020 — ₹19,955</div>
+                        </div>
+                    </div>
+                    <p class="chart-note" style="padding: 0 var(--space-6) var(--space-6);">Delta of ~₹1,391 between classes — income alone provides low discriminative power without credit history.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Limitations Section (Collapsible Accordion Cards) -->
+        <section class="section limitations-section" id="limitations">
+            <div class="section-header">
+                <div class="section-icon-box">
+                    <svg class="icon"><use href="#i-triangle-alert"/></svg>
+                </div>
+                <h2 class="section-title">Dataset Limitations</h2>
+                <p class="section-desc">Critical data characteristics that impact predictive reliability, fairness governance, and real-world banking deployment.</p>
+            </div>
+
+            <!-- Severity Filter Chips -->
+            <div class="limitations-controls">
+                <button type="button" class="limitation-filter-btn active" data-severity="all">All Severity (8)</button>
+                <button type="button" class="limitation-filter-btn" data-severity="high">High Severity (3)</button>
+                <button type="button" class="limitation-filter-btn" data-severity="medium">Medium Severity (3)</button>
+                <button type="button" class="limitation-filter-btn" data-severity="low">Low Severity (2)</button>
+            </div>
+
+            <div class="limitations-grid" id="limitationsGrid">
+                <!-- Limitation 1: Class Imbalance -->
+                <div class="limitation-card severity-high" data-card-severity="high">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-scale"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill high">High Severity</span>
+                                <span class="text-xs text-muted">1:2.2 Skew</span>
+                            </div>
+                            <div class="limitation-title">Class Imbalance Skew</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            The target variable is heavily skewed toward rejection (68.6% vs 31.4% approved). Naive models risk predicting the majority class exclusively while yielding deceptively high raw accuracy.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>Accuracy paradox: 68.6% baseline accuracy with zero predictive skill</li>
+                                <li>Reduced sensitivity (recall) on creditworthy minority applicants</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Class Weight Balancing</span>
+                                <span class="mitigation-tag">F1-Score Optimization</span>
+                                <span class="mitigation-tag">Stratified K-Fold</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 2: Missing Values -->
+                <div class="limitation-card severity-high" data-card-severity="high">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-eraser"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill high">High Severity</span>
+                                <span class="text-xs text-muted">Synthetic Signal</span>
+                            </div>
+                            <div class="limitation-title">Uniform Missing Data Pattern</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            Exactly 50 values (5.0%) are missing across every column, including the target label. Real-world financial records have non-uniform missingness reflecting operational gaps.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>50 rows with null targets discarded prior to model training</li>
+                                <li>Synthetic imputation rules directly govern feature distributions</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Median/Mode Imputer</span>
+                                <span class="mitigation-tag">Target-Null Row Exclusion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 3: Small Sample -->
+                <div class="limitation-card severity-medium" data-card-severity="medium">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-trending-down"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill medium">Medium Severity</span>
+                                <span class="text-xs text-muted">N = 1,000</span>
+                            </div>
+                            <div class="limitation-title">Small Sample Size Constraint</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            1,000 records (950 usable post-cleaning) limits the model's capacity to represent rare financial edge cases and increases cross-validation variance.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>Higher generalization error on non-linear estimators like KNN</li>
+                                <li>Test partition limited to 200 holdout applications</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Cross-Validation</span>
+                                <span class="mitigation-tag">L2 Regularization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 4: Gender Bias -->
+                <div class="limitation-card severity-high" data-card-severity="high">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-users-round"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill high">High Severity</span>
+                                <span class="text-xs text-muted">Fairness Protected</span>
+                            </div>
+                            <div class="limitation-title">Protected Attribute Representation</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            The dataset contains 571 males (60%) vs 379 females (40%). In actual production lending, protected attributes such as gender are governed under ECOA/Fair Lending legislation.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>Potential for automated bias amplification in production underwriting</li>
+                                <li>Demographic disparity in model acceptance decisions</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Disparate Impact Audit</span>
+                                <span class="mitigation-tag">Fair Lending Note</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 5: Weak Feature Separability -->
+                <div class="limitation-card severity-medium" data-card-severity="medium">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-target"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill medium">Medium Severity</span>
+                                <span class="text-xs text-muted">Low Signal Ratio</span>
+                            </div>
+                            <div class="limitation-title">Weak Categorical Separability</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            Most categorical features show virtually identical acceptance rates across categories (e.g. Property Area is ~30% across Urban, Semiurban, and Rural).
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>High dimensionality without corresponding increase in signal</li>
+                                <li>Model reliance is concentrated heavily on Credit Score & DTI</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Enhanced Quadratic Features</span>
+                                <span class="mitigation-tag">StandardScaler Normalization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 6: Synthetic Data -->
+                <div class="limitation-card severity-medium" data-card-severity="medium">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-flask-conical"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill medium">Medium Severity</span>
+                                <span class="text-xs text-muted">Simulated Origin</span>
+                            </div>
+                            <div class="limitation-title">Synthetic Data Generation Signals</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            Identical 5.0% missing rates, perfectly uniform loan purpose counts (178–202 per category), and lack of data collisions confirm simulated dataset construction.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>Ideal for ML architecture & engineering workflows, not live bank underwriting</li>
+                                <li>Macroeconomic covariances are not represented</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Educational Context</span>
+                                <span class="mitigation-tag">Transparent Disclaimers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 7: No Temporal Data -->
+                <div class="limitation-card severity-low" data-card-severity="low">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-calendar-off"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill low">Low Severity</span>
+                                <span class="text-xs text-muted">Static Snapshot</span>
+                            </div>
+                            <div class="limitation-title">Absence of Temporal Dimensions</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            No timestamps or application dates exist. Credit cycles, interest rate changes, and inflation shifts cannot be captured by static feature snapshots.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>Inability to model concept drift over economic cycles</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Cross-sectional Modeling</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Limitation 8: Limited Categories -->
+                <div class="limitation-card severity-low" data-card-severity="low">
+                    <button type="button" class="limitation-header" aria-expanded="false">
+                        <div class="limitation-header-icon">
+                            <svg class="icon"><use href="#i-boxes"/></svg>
+                        </div>
+                        <div class="limitation-header-text">
+                            <div class="limitation-severity-row">
+                                <span class="severity-pill low">Low Severity</span>
+                                <span class="text-xs text-muted">Granularity</span>
+                            </div>
+                            <div class="limitation-title">Coarse Categorical Bins</div>
+                        </div>
+                        <svg class="icon limitation-chevron"><use href="#i-chevron-down"/></svg>
+                    </button>
+                    <div class="limitation-body">
+                        <p class="limitation-desc">
+                            Education and gender are binary; property area is reduced to 3 classifications, obscuring micro-geographic risk variations.
+                        </p>
+                        <div class="limitation-impact">
+                            <h4>Impact</h4>
+                            <ul>
+                                <li>Loss of granular credit risk variance across regional jurisdictions</li>
+                            </ul>
+                        </div>
+                        <div class="limitation-mitigation">
+                            <h4>Mitigation</h4>
+                            <div class="mitigation-tags-row">
+                                <span class="mitigation-tag">Feature Augmentation</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Prediction Form -->
-    <section class="section" id="predict">
-        <div class="section-header">
-            <div class="section-icon">🔮</div>
-            <h2 class="section-title">Try a Prediction</h2>
-            <p class="section-desc">Enter applicant details and predict using actual trained ML models running in your browser.</p>
-        </div>
+        <!-- Insights Section (2x2 Grid) -->
+        <section class="section" id="insights">
+            <div class="section-header">
+                <div class="section-icon-box">
+                    <svg class="icon"><use href="#i-lightbulb"/></svg>
+                </div>
+                <h2 class="section-title">Key Empirical Insights</h2>
+                <p class="section-desc">Key data-driven findings revealing the primary mathematical drivers behind loan underwriting decisions.</p>
+            </div>
 
-        <div class="predict-container">
-            <form class="predict-form" id="predictForm">
-                <!-- Model Selector for Prediction -->
-                <div class="predict-model-selector">
-                    <label for="predictModelSelect">Select Model</label>
-                    <div class="model-select-group">
-                        <select id="predictModelSelect">
-                            <option value="logistic_regression">📈 Logistic Regression (F1: 0.791)</option>
-                            <option value="naive_bayes" selected>📊 Naive Bayes (Best — F1: 0.802)</option>
-                            <option value="knn">📍 KNN K=5 (F1: 0.551)</option>
-                        </select>
-                        <div class="model-indicator" id="modelIndicator">
-                            <span class="model-indicator-dot"></span>
-                            <span class="model-indicator-text">Naive Bayes</span>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div>
+                        <div class="insight-top">
+                            <span class="insight-number">INSIGHT 01</span>
+                            <span class="badge-champion">High Separability</span>
                         </div>
+                        <h3 class="insight-title">Credit Score is the Primary Determinant</h3>
+                        <p class="insight-desc">
+                            Approved applicants average <strong>726.9</strong> vs <strong>651.6</strong> for rejected cases — a significant 75.3-point spread. The minimum approved score is 651, defining a clear underwriting threshold.
+                        </p>
+                    </div>
+                    <div class="insight-metric-pill">
+                        <span class="insight-metric-label">Threshold Spread</span>
+                        <span class="insight-metric-val">+75.3 points</span>
                     </div>
                 </div>
 
-                <!-- Additional missing form fields -->
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="creditScore">Credit Score</label>
-                        <input type="number" id="creditScore" min="300" max="900" value="700" required>
-                        <span class="form-hint">550 – 799 in dataset</span>
+                <div class="insight-card">
+                    <div>
+                        <div class="insight-top">
+                            <span class="insight-number">INSIGHT 02</span>
+                            <span class="badge-champion" style="background:var(--warning-subtle); color:var(--warning);">Low Variance</span>
+                        </div>
+                        <h3 class="insight-title">Income Confers Minor Marginal Value</h3>
+                        <p class="insight-desc">
+                            The mean income delta between approved (₹11,797) and rejected (₹10,406) cohorts is only ₹1,391. Both cohorts overlap across the entire ₹2,000 to ₹20,000 spectrum.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label for="income">Applicant Income (₹)</label>
-                        <input type="number" id="income" min="0" value="12000" required>
-                        <span class="form-hint">Avg: ₹10,853</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="coIncome">Co-applicant Income (₹)</label>
-                        <input type="number" id="coIncome" min="0" value="3000">
-                        <span class="form-hint">Avg: ₹3,114</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="loanAmount">Loan Amount (₹)</label>
-                        <input type="number" id="loanAmount" min="0" value="20000" required>
-                        <span class="form-hint">Avg: ₹20,523</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="loanTerm">Loan Term (months)</label>
-                        <select id="loanTerm">
-                            <option value="12">12 months</option>
-                            <option value="24">24 months</option>
-                            <option value="36">36 months</option>
-                            <option value="48" selected>48 months</option>
-                            <option value="60">60 months</option>
-                            <option value="72">72 months</option>
-                            <option value="84">84 months</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="dtiRatio">DTI Ratio</label>
-                        <input type="number" id="dtiRatio" min="0" max="1" step="0.01" value="0.35">
-                        <span class="form-hint">0.01 – 0.99 in dataset</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="employment">Employment Status</label>
-                        <select id="employment">
-                            <option value="Salaried">Salaried</option>
-                            <option value="Self-employed">Self-employed</option>
-                            <option value="Contract">Contract</option>
-                            <option value="Unemployed">Unemployed</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="education">Education Level</label>
-                        <select id="education">
-                            <option value="Graduate">Graduate</option>
-                            <option value="Not Graduate">Not Graduate</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="existingLoans">Existing Loans</label>
-                        <input type="number" id="existingLoans" min="0" max="10" value="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="savings">Savings (₹)</label>
-                        <input type="number" id="savings" min="0" value="15000">
-                    </div>
-                    <div class="form-group">
-                        <label for="collateral">Collateral Value (₹)</label>
-                        <input type="number" id="collateral" min="0" value="25000">
-                    </div>
-                    <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" id="age" min="18" max="70" value="35">
-                        <span class="form-hint">21 – 59 in dataset</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="dependents">Dependents</label>
-                        <input type="number" id="dependents" min="0" max="5" value="1">
-                        <span class="form-hint">0 – 5 in dataset</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="maritalStatus">Marital Status</label>
-                        <select id="maritalStatus">
-                            <option value="Married">Married</option>
-                            <option value="Single">Single</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="loanPurpose">Loan Purpose</label>
-                        <select id="loanPurpose">
-                            <option value="Business">Business</option>
-                            <option value="Car">Car</option>
-                            <option value="Education">Education</option>
-                            <option value="Home" selected>Home</option>
-                            <option value="Personal">Personal</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="propertyArea">Property Area</label>
-                        <select id="propertyArea">
-                            <option value="Rural">Rural</option>
-                            <option value="Semiurban">Semiurban</option>
-                            <option value="Urban" selected>Urban</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select id="gender">
-                            <option value="Female">Female</option>
-                            <option value="Male" selected>Male</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="employerCategory">Employer Category</label>
-                        <select id="employerCategory">
-                            <option value="Business">Business</option>
-                            <option value="Government">Government</option>
-                            <option value="MNC">MNC</option>
-                            <option value="Private" selected>Private</option>
-                            <option value="Unemployed">Unemployed</option>
-                        </select>
+                    <div class="insight-metric-pill">
+                        <span class="insight-metric-label">Mean Income Delta</span>
+                        <span class="insight-metric-val">₹1,391 only</span>
                     </div>
                 </div>
-                <button type="submit" class="predict-btn" id="predictBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    Predict Loan Approval
+
+                <div class="insight-card">
+                    <div>
+                        <div class="insight-top">
+                            <span class="insight-number">INSIGHT 03</span>
+                            <span class="badge-champion">Anomaly</span>
+                        </div>
+                        <h3 class="insight-title">Contract Workers Lead Approvals</h3>
+                        <p class="insight-desc">
+                            Counter-intuitively, contract workers exhibit the highest approval rate at <strong>39.7%</strong>, exceeding salaried corporate professionals at 29.2% — an empirical artifact of the training data.
+                        </p>
+                    </div>
+                    <div class="insight-metric-pill">
+                        <span class="insight-metric-label">Contract Rate</span>
+                        <span class="insight-metric-val">39.7% Acceptance</span>
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div>
+                        <div class="insight-top">
+                            <span class="insight-number">INSIGHT 04</span>
+                            <span class="badge-champion" style="background:var(--info-subtle); color:var(--info);">Neutral Factor</span>
+                        </div>
+                        <h3 class="insight-title">Location Has Negligible Predictive Influence</h3>
+                        <p class="insight-desc">
+                            Acceptance probabilities are virtually identical across geographic sectors: Urban (31.8%), Rural (30.2%), and Semiurban (30.0%) with a maximum divergence of only 1.8%.
+                        </p>
+                    </div>
+                    <div class="insight-metric-pill">
+                        <span class="insight-metric-label">Max Spread</span>
+                        <span class="insight-metric-val">1.8% Spread</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Evaluation Section -->
+        <section class="section" id="models">
+            <div class="section-header">
+                <div class="section-icon-box">
+                    <svg class="icon"><use href="#i-brain-circuit"/></svg>
+                </div>
+                <h2 class="section-title">Model Evaluation & Benchmark</h2>
+                <p class="section-desc">Performance matrix across all 3 trained classifiers evaluated on the holdout test partition (N = 200).</p>
+            </div>
+
+            <!-- Model Tabs as Accessible Tablist -->
+            <div class="model-tabs" id="modelTabs" role="tablist" aria-label="Model Classifiers">
+                <button type="button" class="model-tab" data-model="logistic_regression" role="tab" aria-selected="false" id="tab-lr">
+                    <div class="model-tab-icon">
+                        <svg class="icon"><use href="#i-chart-line"/></svg>
+                    </div>
+                    <div class="model-tab-info">
+                        <div class="model-tab-name">Logistic Regression</div>
+                        <div class="model-tab-badge">Linear Classifier</div>
+                    </div>
+                    <div class="model-tab-f1 tabular-nums" id="tabF1LR">—</div>
                 </button>
-            </form>
 
-            <!-- Result -->
-            <div class="predict-result hidden" id="predictResult">
-                <div class="result-icon" id="resultIcon"></div>
-                <h3 class="result-title" id="resultTitle"></h3>
-                <div class="result-confidence" id="resultConfidence"></div>
-                <div class="result-factors" id="resultFactors"></div>
-                <div class="result-all-models" id="resultAllModels"></div>
-                <div class="result-disclaimer">
-                    ✅ This prediction uses the <strong>actual trained ML model</strong> (coefficients/parameters exported from scikit-learn). 
-                    The model runs entirely in your browser — no backend server needed.
-                    See the <a href="#limitations">Limitations</a> section for dataset caveats.
+                <button type="button" class="model-tab active" data-model="naive_bayes" role="tab" aria-selected="true" id="tab-nb">
+                    <div class="model-tab-icon">
+                        <svg class="icon"><use href="#i-chart-column"/></svg>
+                    </div>
+                    <div class="model-tab-info">
+                        <div class="model-tab-name">Gaussian Naive Bayes</div>
+                        <div class="model-tab-badge best">Champion Model</div>
+                    </div>
+                    <div class="model-tab-f1 tabular-nums" id="tabF1NB">—</div>
+                </button>
+
+                <button type="button" class="model-tab" data-model="knn" role="tab" aria-selected="false" id="tab-knn">
+                    <div class="model-tab-icon">
+                        <svg class="icon"><use href="#i-scatter-chart"/></svg>
+                    </div>
+                    <div class="model-tab-info">
+                        <div class="model-tab-name">K-Nearest Neighbors</div>
+                        <div class="model-tab-badge">Instance K=5</div>
+                    </div>
+                    <div class="model-tab-f1 tabular-nums" id="tabF1KNN">—</div>
+                </button>
+            </div>
+
+            <!-- Metric Cards Display -->
+            <div class="metrics-display" id="metricsDisplay">
+                <div class="metrics-cards">
+                    <div class="metric-card">
+                        <div class="metric-card-label">Test Accuracy</div>
+                        <div class="metric-card-value tabular-nums" id="metricAccuracy">—</div>
+                        <div class="metric-card-bar">
+                            <div class="metric-bar-fill accuracy-fill" id="barAccuracy" style="width:0%"></div>
+                        </div>
+                        <div class="metric-card-desc">Correct Classifications / 200 Holdout</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-card-label">Precision Rate</div>
+                        <div class="metric-card-value tabular-nums" id="metricPrecision">—</div>
+                        <div class="metric-card-bar">
+                            <div class="metric-bar-fill precision-fill" id="barPrecision" style="width:0%"></div>
+                        </div>
+                        <div class="metric-card-desc">True Positives / Predicted Positives</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-card-label">Recall (Sensitivity)</div>
+                        <div class="metric-card-value tabular-nums" id="metricRecall">—</div>
+                        <div class="metric-card-bar">
+                            <div class="metric-bar-fill recall-fill" id="barRecall" style="width:0%"></div>
+                        </div>
+                        <div class="metric-card-desc">True Positives / Actual Approvals</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-card-label">F1-Score</div>
+                        <div class="metric-card-value tabular-nums" id="metricF1">—</div>
+                        <div class="metric-card-bar">
+                            <div class="metric-bar-fill f1-fill" id="barF1" style="width:0%"></div>
+                        </div>
+                        <div class="metric-card-desc">Harmonic Mean of Precision & Recall</div>
+                    </div>
+                </div>
+
+                <!-- Confusion Matrix & Model Comparison Table -->
+                <div class="cm-and-comparison">
+                    <!-- Confusion Matrix Card -->
+                    <div class="card cm-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Confusion Matrix</h3>
+                            <div class="card-badge" id="cmModelLabel">Naive Bayes</div>
+                        </div>
+                        <div class="cm-container">
+                            <div class="cm-labels-top">
+                                <div class="cm-spacer"></div>
+                                <div class="cm-col-label">Pred. Rejected</div>
+                                <div class="cm-col-label">Pred. Approved</div>
+                            </div>
+                            <div class="cm-row">
+                                <div class="cm-row-label">Actual No</div>
+                                <div class="cm-cell tn" id="cmTN">
+                                    <div class="cm-cell-value tabular-nums">—</div>
+                                    <div class="cm-cell-label">True Neg (TN)</div>
+                                </div>
+                                <div class="cm-cell fp" id="cmFP">
+                                    <div class="cm-cell-value tabular-nums">—</div>
+                                    <div class="cm-cell-label">False Pos (FP)</div>
+                                </div>
+                            </div>
+                            <div class="cm-row">
+                                <div class="cm-row-label">Actual Yes</div>
+                                <div class="cm-cell fn" id="cmFN">
+                                    <div class="cm-cell-value tabular-nums">—</div>
+                                    <div class="cm-cell-label">False Neg (FN)</div>
+                                </div>
+                                <div class="cm-cell tp" id="cmTP">
+                                    <div class="cm-cell-value tabular-nums">—</div>
+                                    <div class="cm-cell-label">True Pos (TP)</div>
+                                </div>
+                            </div>
+                            <div class="cm-total">
+                                Test Evaluation Set: <strong id="cmTotal" class="tabular-nums">200</strong> Holdout Samples
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Table Card -->
+                    <div class="card comparison-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Side-by-Side Model Comparison</h3>
+                            <div class="card-badge success">Benchmark</div>
+                        </div>
+                        <div class="comparison-table-wrapper">
+                            <table class="comparison-table" id="comparisonTable">
+                                <thead>
+                                    <tr>
+                                        <th>Evaluation Metric</th>
+                                        <th>Logistic Regression</th>
+                                        <th>Naive Bayes</th>
+                                        <th>KNN (K=5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Accuracy</td>
+                                        <td id="cmpLRAcc" class="tabular-nums">—</td>
+                                        <td id="cmpNBAcc" class="tabular-nums">—</td>
+                                        <td id="cmpKNNAcc" class="tabular-nums">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Precision</td>
+                                        <td id="cmpLRPrec" class="tabular-nums">—</td>
+                                        <td id="cmpNBPrec" class="tabular-nums">—</td>
+                                        <td id="cmpKNNPrec" class="tabular-nums">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Recall</td>
+                                        <td id="cmpLRRec" class="tabular-nums">—</td>
+                                        <td id="cmpNBRec" class="tabular-nums">—</td>
+                                        <td id="cmpKNNRec" class="tabular-nums">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F1-Score</td>
+                                        <td id="cmpLRF1" class="tabular-nums">—</td>
+                                        <td id="cmpNBF1" class="tabular-nums">—</td>
+                                        <td id="cmpKNNF1" class="tabular-nums">—</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="comparison-verdict" id="comparisonVerdict">
+                            Loading trained models...
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Prediction Section (2-Column Form & Sticky Result Panel) -->
+        <section class="section" id="predict">
+            <div class="section-header">
+                <div class="section-icon-box">
+                    <svg class="icon"><use href="#i-sparkles"/></svg>
+                </div>
+                <h2 class="section-title">Run Loan Underwriting Inference</h2>
+                <p class="section-desc">Enter applicant details across 4 risk domains and run client-side inference using the exported scikit-learn models.</p>
+            </div>
+
+            <div class="predict-container-2col">
+                <!-- Left Column (~60%): Structured Form -->
+                <div class="predict-form-column">
+                    <!-- Model Selector Segmented Control -->
+                    <div class="model-segmented-control">
+                        <div class="segmented-control-title">
+                            <span>Selected Classifier Engine</span>
+                            <span class="text-xs text-muted" id="modelIndicator">
+                                <span class="model-indicator-text">Naive Bayes</span>
+                            </span>
+                        </div>
+                        <div class="model-radio-cards" role="radiogroup" aria-label="Select ML Model">
+                            <div class="model-radio-card" data-model="logistic_regression" role="radio" aria-checked="false" tabindex="0">
+                                <div class="model-radio-name">Logistic Regression</div>
+                                <div class="model-radio-metric">79.1% F1 · Linear</div>
+                            </div>
+                            <div class="model-radio-card active" data-model="naive_bayes" role="radio" aria-checked="true" tabindex="0">
+                                <span class="model-radio-badge">Best</span>
+                                <div class="model-radio-name">Gaussian Naive Bayes</div>
+                                <div class="model-radio-metric">80.2% F1 · Probabilistic</div>
+                            </div>
+                            <div class="model-radio-card" data-model="knn" role="radio" aria-checked="false" tabindex="0">
+                                <div class="model-radio-name">KNN Classifier</div>
+                                <div class="model-radio-metric">55.1% F1 · K=5 Neighbor</div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden select to guarantee script.js backward compatibility -->
+                        <select id="predictModelSelect" class="sr-only-hidden" aria-hidden="true" tabindex="-1">
+                            <option value="logistic_regression">Logistic Regression (F1: 0.791)</option>
+                            <option value="naive_bayes" selected>Naive Bayes (Best — F1: 0.802)</option>
+                            <option value="knn">KNN K=5 (F1: 0.551)</option>
+                        </select>
+                    </div>
+
+                    <form class="predict-form" id="predictForm" novalidate>
+                        <!-- Quick Sample Fill Toolbar -->
+                        <div class="card-header" style="background:var(--bg-subtle); border-radius: var(--radius-md) var(--radius-md) 0 0; border: 1px solid var(--border-subtle); border-bottom: none; padding: 12px 16px;">
+                            <span class="text-xs font-semibold text-muted uppercase tracking-wider">Applicant Parameter Entry</span>
+                            <div style="display:flex; gap:8px;">
+                                <button type="button" class="btn-form-secondary" id="btnFillApproved" style="height:32px; padding:0 10px; font-size:0.75rem;">
+                                    <svg class="icon icon-sm" style="color:var(--success);"><use href="#i-circle-check"/></svg>
+                                    <span>Sample Approved</span>
+                                </button>
+                                <button type="button" class="btn-form-secondary" id="btnFillRejected" style="height:32px; padding:0 10px; font-size:0.75rem;">
+                                    <svg class="icon icon-sm" style="color:var(--danger);"><use href="#i-circle-x"/></svg>
+                                    <span>Sample Rejected</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 4 Fieldset Domain Cards -->
+                        <div style="display:flex; flex-direction:column; gap: var(--space-4);">
+                            <!-- Fieldset 1: Applicant Profile (5 fields) -->
+                            <div class="form-fieldset-card" style="border-radius: 0 0 var(--radius-lg) var(--radius-lg);">
+                                <div class="fieldset-header">
+                                    <div class="fieldset-title-wrap">
+                                        <div class="fieldset-icon">
+                                            <svg class="icon"><use href="#i-user"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="fieldset-title">1. Applicant Profile</div>
+                                            <div class="fieldset-desc">Core personal and demographic attributes</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-muted">5 Fields</span>
+                                </div>
+
+                                <div class="form-grid-inner">
+                                    <!-- Field 1: Age (Stepper) -->
+                                    <div class="form-field" id="field-age">
+                                        <div class="field-label-row">
+                                            <label for="age" class="field-label">
+                                                <svg class="icon"><use href="#i-cake"/></svg>
+                                                <span>Age (Years)</span>
+                                            </label>
+                                            <span class="text-xs text-muted">21–59 in data</span>
+                                        </div>
+                                        <div class="stepper-control">
+                                            <button type="button" class="stepper-btn" data-step-target="age" data-step-dir="-1" aria-label="Decrease age">&minus;</button>
+                                            <input type="number" id="age" name="age" class="stepper-input" min="18" max="75" value="35" required aria-describedby="age-hint">
+                                            <button type="button" class="stepper-btn" data-step-target="age" data-step-dir="1" aria-label="Increase age">&plus;</button>
+                                        </div>
+                                        <span class="form-field-msg" id="age-hint">Dataset training range: 21 to 59 years</span>
+                                    </div>
+
+                                    <!-- Field 2: Gender (Segmented Toggle + Sensitive Notice) -->
+                                    <div class="form-field" id="field-gender">
+                                        <div class="field-label-row">
+                                            <span class="field-label">
+                                                <svg class="icon"><use href="#i-users-round"/></svg>
+                                                <span>Gender</span>
+                                            </span>
+                                            <span class="sensitive-pill" title="Protected attribute used by model; shown for transparency">
+                                                <svg class="icon icon-sm"><use href="#i-info"/></svg>
+                                                <span>Sensitive Attribute</span>
+                                            </span>
+                                        </div>
+                                        <div class="segmented-pills" role="radiogroup" aria-label="Gender selection">
+                                            <button type="button" class="pill-option active" data-target-input="gender" data-value="Male" role="radio" aria-checked="true">Male</button>
+                                            <button type="button" class="pill-option" data-target-input="gender" data-value="Female" role="radio" aria-checked="false">Female</button>
+                                        </div>
+                                        <select id="gender" name="gender" class="sr-only-hidden" tabindex="-1">
+                                            <option value="Female">Female</option>
+                                            <option value="Male" selected>Male</option>
+                                        </select>
+                                        <span class="form-field-msg">Used by trained model; reported for compliance</span>
+                                    </div>
+
+                                    <!-- Field 3: Marital Status (Segmented Toggle) -->
+                                    <div class="form-field" id="field-maritalStatus">
+                                        <div class="field-label-row">
+                                            <span class="field-label">
+                                                <svg class="icon"><use href="#i-user"/></svg>
+                                                <span>Marital Status</span>
+                                            </span>
+                                        </div>
+                                        <div class="segmented-pills" role="radiogroup" aria-label="Marital Status selection">
+                                            <button type="button" class="pill-option active" data-target-input="maritalStatus" data-value="Married" role="radio" aria-checked="true">Married</button>
+                                            <button type="button" class="pill-option" data-target-input="maritalStatus" data-value="Single" role="radio" aria-checked="false">Single</button>
+                                        </div>
+                                        <select id="maritalStatus" name="maritalStatus" class="sr-only-hidden" tabindex="-1">
+                                            <option value="Married" selected>Married</option>
+                                            <option value="Single">Single</option>
+                                        </select>
+                                        <span class="form-field-msg">Categorical attribute</span>
+                                    </div>
+
+                                    <!-- Field 4: Dependents (Stepper) -->
+                                    <div class="form-field" id="field-dependents">
+                                        <div class="field-label-row">
+                                            <label for="dependents" class="field-label">
+                                                <svg class="icon"><use href="#i-users"/></svg>
+                                                <span>Dependents</span>
+                                            </label>
+                                            <span class="text-xs text-muted">0–5 range</span>
+                                        </div>
+                                        <div class="stepper-control">
+                                            <button type="button" class="stepper-btn" data-step-target="dependents" data-step-dir="-1" aria-label="Decrease dependents">&minus;</button>
+                                            <input type="number" id="dependents" name="dependents" class="stepper-input" min="0" max="10" value="1" required>
+                                            <button type="button" class="stepper-btn" data-step-target="dependents" data-step-dir="1" aria-label="Increase dependents">&plus;</button>
+                                        </div>
+                                        <span class="form-field-msg">Number of financial dependents</span>
+                                    </div>
+
+                                    <!-- Field 5: Education Level (Segmented Toggle) -->
+                                    <div class="form-field col-span-2" id="field-education">
+                                        <div class="field-label-row">
+                                            <span class="field-label">
+                                                <svg class="icon"><use href="#i-graduation-cap"/></svg>
+                                                <span>Education Level</span>
+                                            </span>
+                                        </div>
+                                        <div class="segmented-pills" role="radiogroup" aria-label="Education level selection">
+                                            <button type="button" class="pill-option active" data-target-input="education" data-value="Graduate" role="radio" aria-checked="true">Graduate Degree</button>
+                                            <button type="button" class="pill-option" data-target-input="education" data-value="Not Graduate" role="radio" aria-checked="false">Not Graduate</button>
+                                        </div>
+                                        <select id="education" name="education" class="sr-only-hidden" tabindex="-1">
+                                            <option value="Graduate" selected>Graduate</option>
+                                            <option value="Not Graduate">Not Graduate</option>
+                                        </select>
+                                        <span class="form-field-msg">Highest completed degree level</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fieldset 2: Employment & Income (4 fields) -->
+                            <div class="form-fieldset-card">
+                                <div class="fieldset-header">
+                                    <div class="fieldset-title-wrap">
+                                        <div class="fieldset-icon">
+                                            <svg class="icon"><use href="#i-briefcase"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="fieldset-title">2. Employment & Income</div>
+                                            <div class="fieldset-desc">Occupational status and monthly earnings</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-muted">4 Fields</span>
+                                </div>
+
+                                <div class="form-grid-inner">
+                                    <!-- Field 6: Employment Status (Custom Select) -->
+                                    <div class="form-field" id="field-employment">
+                                        <div class="field-label-row">
+                                            <label for="employment" class="field-label">
+                                                <svg class="icon"><use href="#i-briefcase"/></svg>
+                                                <span>Employment Status</span>
+                                            </label>
+                                        </div>
+                                        <div class="custom-select-wrap">
+                                            <select id="employment" name="employment" class="custom-select">
+                                                <option value="Salaried" selected>Salaried Professional</option>
+                                                <option value="Self-employed">Self-Employed / Freelancer</option>
+                                                <option value="Contract">Contract / Consultant</option>
+                                                <option value="Unemployed">Unemployed</option>
+                                            </select>
+                                            <svg class="icon custom-select-chevron"><use href="#i-chevron-down"/></svg>
+                                        </div>
+                                        <span class="form-field-msg">Current employment engagement</span>
+                                    </div>
+
+                                    <!-- Field 7: Employer Category (Custom Select) -->
+                                    <div class="form-field" id="field-employerCategory">
+                                        <div class="field-label-row">
+                                            <label for="employerCategory" class="field-label">
+                                                <svg class="icon"><use href="#i-landmark"/></svg>
+                                                <span>Employer Category</span>
+                                            </label>
+                                        </div>
+                                        <div class="custom-select-wrap">
+                                            <select id="employerCategory" name="employerCategory" class="custom-select">
+                                                <option value="Private" selected>Private Corporate</option>
+                                                <option value="Government">Government / Public Sector</option>
+                                                <option value="MNC">Multinational (MNC)</option>
+                                                <option value="Business">Registered Business Owner</option>
+                                                <option value="Unemployed">Unemployed</option>
+                                            </select>
+                                            <svg class="icon custom-select-chevron"><use href="#i-chevron-down"/></svg>
+                                        </div>
+                                        <span class="form-field-msg">Sector categorization of employer</span>
+                                    </div>
+
+                                    <!-- Field 8: Applicant Income (Currency Adornment) -->
+                                    <div class="form-field" id="field-income">
+                                        <div class="field-label-row">
+                                            <label for="income" class="field-label">
+                                                <svg class="icon"><use href="#i-wallet"/></svg>
+                                                <span>Applicant Monthly Income</span>
+                                            </label>
+                                            <span class="text-xs text-muted">Avg: ₹10,853</span>
+                                        </div>
+                                        <div class="input-adornment-wrap">
+                                            <span class="input-prefix">₹</span>
+                                            <input type="text" inputmode="numeric" id="income" name="income" class="form-control-input has-prefix" value="12,000" data-raw-val="12000" required aria-describedby="income-hint">
+                                        </div>
+                                        <span class="form-field-msg" id="income-hint">Dataset training range: ₹2,009 to ₹19,988</span>
+                                    </div>
+
+                                    <!-- Field 9: Co-applicant Income (Currency Adornment) -->
+                                    <div class="form-field" id="field-coIncome">
+                                        <div class="field-label-row">
+                                            <label for="coIncome" class="field-label">
+                                                <svg class="icon"><use href="#i-wallet"/></svg>
+                                                <span>Co-applicant Monthly Income</span>
+                                            </label>
+                                            <span class="text-xs text-muted">Avg: ₹3,114</span>
+                                        </div>
+                                        <div class="input-adornment-wrap">
+                                            <span class="input-prefix">₹</span>
+                                            <input type="text" inputmode="numeric" id="coIncome" name="coIncome" class="form-control-input has-prefix" value="3,000" data-raw-val="3000">
+                                        </div>
+                                        <span class="form-field-msg">Optional auxiliary household income</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fieldset 3: Credit & Assets (5 fields with Sliders & Steppers) -->
+                            <div class="form-fieldset-card">
+                                <div class="fieldset-header">
+                                    <div class="fieldset-title-wrap">
+                                        <div class="fieldset-icon">
+                                            <svg class="icon"><use href="#i-wallet"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="fieldset-title">3. Credit History & Asset Reserves</div>
+                                            <div class="fieldset-desc">Primary underwriting and risk scoring metrics</div>
+                                        </div>
+                                    </div>
+                                    <span class="card-badge success">Key Predictors</span>
+                                </div>
+
+                                <div style="display:flex; flex-direction:column; gap: var(--space-4);">
+                                    <!-- Field 10: Credit Score (Synced Slider + Input + Live Tier) -->
+                                    <div class="form-field" id="field-creditScore">
+                                        <div class="field-label-row">
+                                            <label for="creditScore" class="field-label">
+                                                <svg class="icon"><use href="#i-gauge"/></svg>
+                                                <span>Credit Score (CIBIL / Experian)</span>
+                                            </label>
+                                            <div style="display:flex; align-items:center; gap:8px;">
+                                                <span class="live-badge" id="creditScoreTier">700 · Prime</span>
+                                                <input type="number" id="creditScore" name="creditScore" min="300" max="900" value="700" class="form-control-input" style="width:78px; height:32px; padding:4px 8px; text-align:center; font-weight:700;" required>
+                                            </div>
+                                        </div>
+                                        <div class="slider-control-wrap">
+                                            <input type="range" id="creditScoreSlider" min="300" max="900" value="700" class="slider-input" aria-label="Adjust credit score">
+                                            <div class="slider-ticks-row">
+                                                <span>300 (Poor)</span>
+                                                <span style="color:var(--warning);">Approval Threshold: ~651</span>
+                                                <span>900 (Super-Prime)</span>
+                                            </div>
+                                        </div>
+                                        <span class="form-field-msg">Dataset range: 550 to 799 (strongest model coefficient)</span>
+                                    </div>
+
+                                    <!-- Field 11: DTI Ratio (Synced Slider + Input) -->
+                                    <div class="form-field" id="field-dtiRatio">
+                                        <div class="field-label-row">
+                                            <label for="dtiRatio" class="field-label">
+                                                <svg class="icon"><use href="#i-percent"/></svg>
+                                                <span>Debt-to-Income (DTI) Ratio</span>
+                                            </label>
+                                            <div style="display:flex; align-items:center; gap:8px;">
+                                                <span class="live-badge" id="dtiRatioPct">35.0%</span>
+                                                <input type="number" id="dtiRatio" name="dtiRatio" min="0" max="1" step="0.01" value="0.35" class="form-control-input" style="width:78px; height:32px; padding:4px 8px; text-align:center; font-weight:700;">
+                                            </div>
+                                        </div>
+                                        <div class="slider-control-wrap">
+                                            <input type="range" id="dtiRatioSlider" min="0" max="1" step="0.01" value="0.35" class="slider-input" aria-label="Adjust debt-to-income ratio">
+                                            <div class="slider-ticks-row">
+                                                <span>0.00 (Zero Debt)</span>
+                                                <span>Safe: &le;0.35</span>
+                                                <span>1.00 (High Leverage)</span>
+                                            </div>
+                                        </div>
+                                        <span class="form-field-msg">Monthly debt liabilities divided by total income</span>
+                                    </div>
+
+                                    <div class="form-grid-inner">
+                                        <!-- Field 12: Existing Loans (Stepper) -->
+                                        <div class="form-field" id="field-existingLoans">
+                                            <div class="field-label-row">
+                                                <label for="existingLoans" class="field-label">
+                                                    <svg class="icon"><use href="#i-file-text"/></svg>
+                                                    <span>Active Existing Loans</span>
+                                                </label>
+                                            </div>
+                                            <div class="stepper-control">
+                                                <button type="button" class="stepper-btn" data-step-target="existingLoans" data-step-dir="-1" aria-label="Decrease existing loans">&minus;</button>
+                                                <input type="number" id="existingLoans" name="existingLoans" class="stepper-input" min="0" max="10" value="1">
+                                                <button type="button" class="stepper-btn" data-step-target="existingLoans" data-step-dir="1" aria-label="Increase existing loans">&plus;</button>
+                                            </div>
+                                            <span class="form-field-msg">Number of concurrent active credit accounts</span>
+                                        </div>
+
+                                        <!-- Field 13: Liquid Savings (Currency) -->
+                                        <div class="form-field" id="field-savings">
+                                            <div class="field-label-row">
+                                                <label for="savings" class="field-label">
+                                                    <svg class="icon"><use href="#i-piggy-bank"/></svg>
+                                                    <span>Liquid Savings Balance</span>
+                                                </label>
+                                            </div>
+                                            <div class="input-adornment-wrap">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="text" inputmode="numeric" id="savings" name="savings" class="form-control-input has-prefix" value="15,000" data-raw-val="15000">
+                                            </div>
+                                            <span class="form-field-msg">Available bank and deposit liquidity</span>
+                                        </div>
+
+                                        <!-- Field 14: Collateral Value (Currency) -->
+                                        <div class="form-field col-span-2" id="field-collateral">
+                                            <div class="field-label-row">
+                                                <label for="collateral" class="field-label">
+                                                    <svg class="icon"><use href="#i-shield"/></svg>
+                                                    <span>Pledged Collateral Asset Value</span>
+                                                </label>
+                                                <span class="text-xs text-muted" id="collateralCoverageBadge">Covers: 125%</span>
+                                            </div>
+                                            <div class="input-adornment-wrap">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="text" inputmode="numeric" id="collateral" name="collateral" class="form-control-input has-prefix" value="25,000" data-raw-val="25000">
+                                            </div>
+                                            <span class="form-field-msg">Appraised market value of pledged security asset</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fieldset 4: Loan Terms & Property (4 fields) -->
+                            <div class="form-fieldset-card">
+                                <div class="fieldset-header">
+                                    <div class="fieldset-title-wrap">
+                                        <div class="fieldset-icon">
+                                            <svg class="icon"><use href="#i-banknote"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="fieldset-title">4. Loan Facility & Property</div>
+                                            <div class="fieldset-desc">Requested borrowing facility parameters</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs text-muted">4 Fields</span>
+                                </div>
+
+                                <div class="form-grid-inner">
+                                    <!-- Field 15: Loan Amount (Currency) -->
+                                    <div class="form-field" id="field-loanAmount">
+                                        <div class="field-label-row">
+                                            <label for="loanAmount" class="field-label">
+                                                <svg class="icon"><use href="#i-banknote"/></svg>
+                                                <span>Requested Loan Amount</span>
+                                            </label>
+                                            <span class="text-xs text-muted">Avg: ₹20,523</span>
+                                        </div>
+                                        <div class="input-adornment-wrap">
+                                            <span class="input-prefix">₹</span>
+                                            <input type="text" inputmode="numeric" id="loanAmount" name="loanAmount" class="form-control-input has-prefix" value="20,000" data-raw-val="20000" required aria-describedby="loanAmount-hint">
+                                        </div>
+                                        <span class="form-field-msg" id="loanAmount-hint">Dataset training range: ₹1,015 to ₹39,995</span>
+                                    </div>
+
+                                    <!-- Field 16: Loan Term (Segmented Chips 12-84m) -->
+                                    <div class="form-field" id="field-loanTerm">
+                                        <div class="field-label-row">
+                                            <span class="field-label">
+                                                <svg class="icon"><use href="#i-hourglass"/></svg>
+                                                <span>Loan Term (Months)</span>
+                                            </span>
+                                            <span class="live-badge" id="loanTermDisplay">48 mo (4 yrs)</span>
+                                        </div>
+                                        <div class="chips-grid-tenure" role="radiogroup" aria-label="Loan term in months">
+                                            <button type="button" class="chip-tenure" data-term-val="12">12m</button>
+                                            <button type="button" class="chip-tenure" data-term-val="24">24m</button>
+                                            <button type="button" class="chip-tenure" data-term-val="36">36m</button>
+                                            <button type="button" class="chip-tenure active" data-term-val="48">48m</button>
+                                            <button type="button" class="chip-tenure" data-term-val="60">60m</button>
+                                            <button type="button" class="chip-tenure" data-term-val="72">72m</button>
+                                            <button type="button" class="chip-tenure" data-term-val="84">84m</button>
+                                        </div>
+                                        <select id="loanTerm" name="loanTerm" class="sr-only-hidden" tabindex="-1">
+                                            <option value="12">12 months</option>
+                                            <option value="24">24 months</option>
+                                            <option value="36">36 months</option>
+                                            <option value="48" selected>48 months</option>
+                                            <option value="60">60 months</option>
+                                            <option value="72">72 months</option>
+                                            <option value="84">84 months</option>
+                                        </select>
+                                        <span class="form-field-msg">Amortization tenure schedule</span>
+                                    </div>
+
+                                    <!-- Field 17: Loan Purpose (Custom Select) -->
+                                    <div class="form-field" id="field-loanPurpose">
+                                        <div class="field-label-row">
+                                            <label for="loanPurpose" class="field-label">
+                                                <svg class="icon"><use href="#i-target"/></svg>
+                                                <span>Loan Purpose</span>
+                                            </label>
+                                        </div>
+                                        <div class="custom-select-wrap">
+                                            <select id="loanPurpose" name="loanPurpose" class="custom-select">
+                                                <option value="Home" selected>Home Mortgage / Acquisition</option>
+                                                <option value="Personal">Personal Financing</option>
+                                                <option value="Business">Business Capital Expansion</option>
+                                                <option value="Education">Higher Education Tuition</option>
+                                                <option value="Car">Automobile Financing</option>
+                                            </select>
+                                            <svg class="icon custom-select-chevron"><use href="#i-chevron-down"/></svg>
+                                        </div>
+                                        <span class="form-field-msg">Primary intended utilization of funds</span>
+                                    </div>
+
+                                    <!-- Field 18: Property Area (Custom Select) -->
+                                    <div class="form-field" id="field-propertyArea">
+                                        <div class="field-label-row">
+                                            <label for="propertyArea" class="field-label">
+                                                <svg class="icon"><use href="#i-house"/></svg>
+                                                <span>Property Area</span>
+                                            </label>
+                                        </div>
+                                        <div class="custom-select-wrap">
+                                            <select id="propertyArea" name="propertyArea" class="custom-select">
+                                                <option value="Urban" selected>Urban Metropolis</option>
+                                                <option value="Semiurban">Semiurban Municipality</option>
+                                                <option value="Rural">Rural Sector</option>
+                                            </select>
+                                            <svg class="icon custom-select-chevron"><use href="#i-chevron-down"/></svg>
+                                        </div>
+                                        <span class="form-field-msg">Geographic zoning classification</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions Bar -->
+                        <div class="form-actions-row">
+                            <button type="submit" class="predict-submit-btn" id="predictBtn">
+                                <svg class="icon" id="predictBtnIcon"><use href="#i-wand-sparkles"/></svg>
+                                <span id="predictBtnText">Predict Loan Approval</span>
+                            </button>
+                            <button type="button" class="btn-form-secondary" id="predictResetBtn">
+                                <svg class="icon"><use href="#i-rotate-ccw"/></svg>
+                                <span>Reset Defaults</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Column (~40%): Sticky Prediction Result Panel -->
+                <div class="predict-result-sticky" id="predictResult" aria-live="polite">
+                    <!-- State 1: Awaiting Input / Empty State -->
+                    <div class="result-empty-state" id="resultEmptyState">
+                        <div class="result-empty-icon">
+                            <svg class="icon icon-xl"><use href="#i-wand-sparkles"/></svg>
+                        </div>
+                        <div class="result-empty-title">Awaiting Inference Request</div>
+                        <p class="result-empty-desc">
+                            Adjust applicant parameters on the left and click <strong>Predict Loan Approval</strong> to execute the client-side ML engine.
+                        </p>
+                    </div>
+
+                    <!-- State 2: Prediction Outcome State (Hidden by default) -->
+                    <div id="resultContentState" class="hidden" style="display:flex; flex-direction:column; gap: var(--space-5);">
+                        <!-- Result Header Verdict -->
+                        <div class="result-computed-header">
+                            <div class="result-header-left">
+                                <div class="result-status-icon-wrap" id="resultStatusIconWrap">
+                                    <span id="resultIcon">
+                                        <svg class="icon icon-lg"><use href="#i-circle-check-big"/></svg>
+                                    </span>
+                                </div>
+                                <div>
+                                    <div class="result-verdict-sub" id="resultVerdictSub">Underwriting Verdict</div>
+                                    <div class="result-verdict-title" id="resultTitle">Loan Approved</div>
+                                </div>
+                            </div>
+                            <span class="card-badge" id="resultRiskBadge">Approved</span>
+                        </div>
+
+                        <!-- Animated Circular SVG Probability Gauge -->
+                        <div class="gauge-container">
+                            <div class="gauge-svg-wrap">
+                                <svg class="gauge-svg" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" class="gauge-bg-circle"/>
+                                    <circle cx="50" cy="50" r="40" class="gauge-progress-circle" id="gaugeProgressCircle"
+                                        stroke="var(--success)" stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
+                                </svg>
+                                <div class="gauge-center-content">
+                                    <div class="gauge-pct tabular-nums" id="gaugePctVal">0.0%</div>
+                                    <div class="gauge-label">Probability</div>
+                                </div>
+                            </div>
+                            <div class="gauge-confidence-text" id="resultConfidence">
+                                Naive Bayes — Approval Probability: 0.0%
+                            </div>
+                        </div>
+
+                        <!-- Key Decisional Factors -->
+                        <div class="result-factors-box">
+                            <div class="result-factors-title">Key Decision Underwriting Factors</div>
+                            <div class="factors-list" id="resultFactors">
+                                <!-- Populated dynamically by script.js -->
+                            </div>
+                        </div>
+
+                        <!-- All-Models Consensus Breakdown -->
+                        <div class="result-consensus-box">
+                            <div class="result-factors-title">Tri-Model Consensus Check</div>
+                            <div id="resultAllModels" style="display:flex; flex-direction:column; gap:6px;">
+                                <!-- Populated dynamically by script.js -->
+                            </div>
+                        </div>
+
+                        <!-- Compliance & Limitations Disclaimer Callout -->
+                        <div class="result-disclaimer-callout">
+                            <svg class="icon"><use href="#i-info"/></svg>
+                            <div>
+                                This evaluation executes locally in your browser using trained mathematical weights exported from scikit-learn. See the <a href="#limitations">Dataset Limitations</a> for caveats.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <span class="brand-text">LoanSense<span class="brand-dot">.</span>AI</span>
-                <p class="footer-tagline">AI/ML Project — Loan Approval System</p>
+        <div class="footer-inner">
+            <div class="footer-brand-col">
+                <a href="#overview" class="nav-brand">
+                    <div class="brand-icon-box">
+                        <svg class="icon"><use href="#i-landmark"/></svg>
+                    </div>
+                    <span class="brand-text">LoanSense<span class="brand-dot">.</span>AI</span>
+                </a>
+                <p class="footer-desc">
+                    Interactive browser-based Machine Learning platform for transparent credit underwriting analysis, comparative algorithm evaluation, and client-side risk scoring.
+                </p>
+                <div class="trust-row" style="padding-top:0;">
+                    <div class="trust-item">
+                        <svg class="icon"><use href="#i-shield-check"/></svg>
+                        <span>Zero server transmission</span>
+                    </div>
+                </div>
             </div>
-            <div class="footer-info">
-                <p>Dataset: <code>loan_approval_data.csv</code> — 1,000 records × 20 features</p>
-                <p>Models: Logistic Regression · Naive Bayes · KNN</p>
 
+            <div class="footer-col">
+                <div class="footer-col-title">Project Sections</div>
+                <ul class="footer-links-list">
+                    <li class="footer-link-item"><a href="#overview">Overview & Benchmark</a></li>
+                    <li class="footer-link-item"><a href="#dataset">Dataset & Schema</a></li>
+                    <li class="footer-link-item"><a href="#limitations">Limitations & Biases</a></li>
+                    <li class="footer-link-item"><a href="#insights">Empirical Insights</a></li>
+                    <li class="footer-link-item"><a href="#models">Model Evaluation Matrix</a></li>
+                    <li class="footer-link-item"><a href="#predict">Run Prediction</a></li>
+                </ul>
             </div>
+
+            <div class="footer-col">
+                <div class="footer-col-title">Architecture Stack</div>
+                <div class="footer-tech-chips">
+                    <span class="tech-chip">Vanilla HTML5</span>
+                    <span class="tech-chip">Vanilla CSS3</span>
+                    <span class="tech-chip">Vanilla ES6 JS</span>
+                    <span class="tech-chip">scikit-learn</span>
+                    <span class="tech-chip">StandardScaler</span>
+                    <span class="tech-chip">Gaussian NB</span>
+                    <span class="tech-chip">Logistic Regression</span>
+                    <span class="tech-chip">KNN (K=5)</span>
+                    <span class="tech-chip">Lucide SVG Sprite</span>
+                </div>
+                <div style="margin-top: var(--space-4);">
+                    <a href="https://github.com/YogeshKshirsagar-2512/LoanSenseAI" target="_blank" rel="noopener noreferrer" class="btn-form-secondary" style="height:36px; display:inline-flex; padding: 0 12px; font-size:0.75rem;">
+                        <svg class="icon"><use href="#i-github"/></svg>
+                        <span>GitHub Repository</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>LoanSense.AI — Built with scikit-learn + vanilla JS. Runs completely offline via <code>file://</code>.</span>
+            <span>WCAG AA Accessible &middot; 0 Emoji</span>
         </div>
     </footer>
 
+    <!-- Scripts: Model Weights must load before Prediction Engine -->
     <script src="model_data.js"></script>
     <script src="script.js"></script>
 </body>
