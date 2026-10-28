@@ -6,7 +6,12 @@
 let MODEL_DATA = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
+    // Ensure clean light theme state
+    try {
+        localStorage.removeItem('loansense_theme');
+    } catch (e) {}
+    document.documentElement.removeAttribute('data-theme');
+
     initScrollProgress();
     initNavbar();
     initMobileDrawer();
@@ -17,64 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initPredictionFormControls();
     loadModelData();
 });
-
-// =============================================
-// 1. THEME MANAGEMENT MODULE
-// =============================================
-function initTheme() {
-    const themeToggleBtn = document.getElementById('themeToggle');
-    if (!themeToggleBtn) return;
-
-    let savedTheme = null;
-    try {
-        savedTheme = localStorage.getItem('loansense_theme');
-    } catch (e) {
-        console.warn('LocalStorage unavailable for theme persistence:', e);
-    }
-
-    const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-    const initialTheme = savedTheme || (systemPrefersLight ? 'light' : 'dark');
-
-    applyTheme(initialTheme);
-
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        applyTheme(nextTheme);
-
-        try {
-            localStorage.setItem('loansense_theme', nextTheme);
-        } catch (e) {
-            console.warn('Failed to save theme in localStorage:', e);
-        }
-    });
-
-    // Listen to OS theme changes if user has no saved preference
-    if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-            let userStored = null;
-            try {
-                userStored = localStorage.getItem('loansense_theme');
-            } catch (err) {}
-            if (!userStored) {
-                applyTheme(e.matches ? 'light' : 'dark');
-            }
-        });
-    }
-}
-
-function applyTheme(theme) {
-    if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-        document.documentElement.removeAttribute('data-theme');
-    }
-
-    const themeToggleBtn = document.getElementById('themeToggle');
-    if (themeToggleBtn) {
-        themeToggleBtn.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} theme`);
-    }
-}
 
 // =============================================
 // 2. SCROLL PROGRESS BAR

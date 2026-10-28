@@ -10,7 +10,7 @@ LoanSense.AI is an interactive, browser-based Machine Learning underwriting dash
 
 - **Real ML Inference in Browser:** All models are trained in Python using scikit-learn and exported as standardized weights (`model_data.js`). The browser executes mathematical inference locally (Sigmoid for Logistic Regression, Gaussian PDF for Naive Bayes, Euclidean distance for KNN) with zero data leaving the user's device.
 - **Fintech-Grade UI/UX:** Built with a clean, high-contrast fintech aesthetic featuring:
-  - **Universal Dark & Light Themes:** Instant toggle switch with persistent storage in `localStorage` and OS preference detection (`prefers-color-scheme`).
+  - **Dedicated Pure Light Architecture:** Clean, high-contrast fintech aesthetic with a silent architectural structure background, engineered specifically for readability and precision data analysis.
   - **Zero Emoji / Unified SVG Sprite:** Completely standardized using Lucide SVG icons embedded into an offline-ready sprite.
   - **Two-Column Hero & Live Benchmark:** Dynamic benchmark preview card showing the champion model's accuracy (88.0%) and F1-score (80.2%) alongside direct CTAs.
   - **4-Domain Grouped Prediction Form:** 18 loan parameters organized into Applicant Profile, Employment & Income, Credit & Assets, and Loan Request with synchronized sliders, steppers, segmented tenure chips, and currency inputs with ₹ adornments.

@@ -75,11 +75,12 @@
       </defs>
     </svg>
 
-    <!-- Ambient Subtle Background -->
-    <div class="ambient-bg" aria-hidden="true">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+    <!-- Silent Structure Background -->
+    <div class="bg-silent-structure" aria-hidden="true">
+        <div class="structure-grid"></div>
+        <div class="structure-dots"></div>
+        <div class="structure-glow"></div>
+        <div class="structure-axis-lines"></div>
     </div>
 
     <!-- Sticky Header & Navbar -->
@@ -122,17 +123,12 @@
                 </a>
             </div>
 
-            <!-- Right Actions: Status Chip, Theme Toggle, CTA & Mobile Toggle -->
+            <!-- Right Actions: Status Chip, CTA & Mobile Toggle -->
             <div class="nav-actions">
                 <div class="nav-status" id="navStatusChip" aria-live="polite">
                     <span class="status-dot"></span>
                     <span class="status-text" id="navStatusText">Model Active · Naive Bayes</span>
                 </div>
-
-                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Switch between light and dark theme">
-                    <svg class="icon theme-icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
-                    <svg class="icon theme-icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-                </button>
 
                 <a href="#predict" class="btn-nav-cta">
                     <svg class="icon"><use href="#i-wand-sparkles"/></svg>
